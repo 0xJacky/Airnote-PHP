@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<title>笺记 — 后端服务 v1.0 - 1.0.20170203</title>
+	</head>
+<body>
+<h1>笺记 — 后端服务 v1.0 - 1.0.20170203</h1>
+
+<p>By 0xJacky</p>
+
+<p>Copyright UoziTech 2017</p>
+
+<h2>协议 Protocol</h2>
+
+<ol>
+	<li>auth_key: md5加密(当前UNIX时间戳+后端定义密钥) 后得到的一个拥有32个字符的字符串
+
+		<p>注意：密钥有效期为60秒，也就是说 auth_key 是一个动态密钥</p></li>
+	<li>user_token: md5加密(用户ID+当前UNIX时间戳+盐) 后得到的一个拥有32个字符的字符串
+
+		<p>字符串由服务器生成并返回，无需校验其有效性，只需要需要保存到本地以备后续使用，另外，user_token 没有时间限制</p></li>
+	<li>通讯方式为 POST</li>
+</ol>
+
+<h3>通信测试</h3>
+
+<p>方法:</p>
+
+<pre><code>{
+  &quot;ping&quot;: &quot;&quot;,
+  &quot;auth_key:&quot; &quot;&lt;auth_key&gt;&quot;,
+}
+</code></pre>
+
+<ul>
+	<li>通信成功</li>
+</ul>
+
+<pre><code>{
+  &quot;error&quot;: 0,
+  &quot;api_version&quot;: &quot;1.0.20170126&quot;,
+  &quot;timestamp&quot;: 1485183742
+}
+</code></pre>
+
+<ul>
+	<li>请求错误 （连接超时）</li>
+</ul>
+
+<pre><code>{
+  &quot;error&quot;: 400,
+  &quot;api_version&quot;: &quot;1.0.20170126&quot;,
+  &quot;timestamp&quot;: 1485184565
+}
+</code></pre>
+
+<h3>获取社区文章</h3>
+
+<ul>
+	<li>方法:</li>
+</ul>
+
+<pre><code>{
+  &quot;action&quot; = &quot;query_post_list&quot;,
+  &quot;auth_key&quot; = &lt;auth_key&gt;
+}
+</code></pre>
+
+<ul>
+	<li>请求成功</li>
+</ul>
+
+<pre><code>{
+  &quot;error&quot;: 0,
+  &quot;post_list&quot;: [
+    {
+      &quot;post_id&quot;: &quot;3&quot;,
+      &quot;post_author&quot;: &quot;test2&quot;,
+      &quot;post_title&quot;: &quot;test1&quot;,
+      &quot;post_img&quot;: &quot;NULL&quot;
+    },
+    {
+      &quot;post_id&quot;: &quot;2&quot;,
+      &quot;post_author&quot;: &quot;test2&quot;,
+      &quot;post_title&quot;: &quot;test1&quot;,
+      &quot;post_img&quot;: &quot;NULL&quot;
+    },
+    {
+      &quot;post_id&quot;: &quot;1&quot;,
+      &quot;post_author&quot;: &quot;Jacky&quot;,
+      &quot;post_title&quot;: &quot;test1&quot;,
+      &quot;post_img&quot;: &quot;NULL&quot;
+    }
+  ],
+  &quot;timestamp&quot;: 1486112133
+}
+</code></pre>
+
+<h3>用户注册</h3>
+
+<p>方法：</p>
+
+<pre><code>{
+  &quot;action&quot;: &quot;user_register&quot;,
+  &quot;register_name&quot;: &quot;test&quot;,
+  &quot;register_pw:&quot; &quot;pw&quot;,
+  &quot;register_mail&quot;: &quot;pw&quot;,
+  &quot;auth_key:&quot; &quot;&lt;auth_key&gt;&quot;,
+}
+</code></pre>
+
+<ul>
+	<li>账户冲突（已注册）</li>
+</ul>
+
+<pre><code>{
+  &quot;error&quot;: 405,
+  &quot;field&quot;: &quot;ID&quot;,
+  &quot;timestamp&quot;: 1485185488
+}
+</code></pre>
+
+<ul>
+	<li>账户冲突（邮件冲突）</li>
+</ul>
+
+<pre><code>{
+  &quot;error&quot;: 405,
+  &quot;field&quot;: &quot;mail&quot;,
+  &quot;timestamp&quot;: 1485185578
+}
+</code></pre>
+
+<ul>
+	<li>账户冲突（名称冲突）</li>
+</ul>
+
+<pre><code>{
+  &quot;error&quot;: 405,
+  &quot;field&quot;: &quot;name&quot;,
+  &quot;timestamp&quot;: 1485185693
+}
+</code></pre>
+
+<ul>
+	<li>注册成功</li>
+</ul>
+
+<pre><code>{
+  &quot;error&quot;: 0,
+  &quot;registered_id&quot;: id,
+  &quot;token&quot;: &quot;NjE0ODUxODk2MzIzVCEkbnNQZEdpWDdCV0Zr&quot;
+}
+</code></pre>
+
+<p>注意，注册成功后需要将 registered_id 保存，登录后的操作大多数以 id 来验证用户权限</p>
+
+<h3>用户登录</h3>
+
+<p>方法：</p>
+
+<pre><code>{
+  &quot;action&quot;: &quot;user_login&quot;,
+  &quot;user_mail&quot;: &quot;mail&quot;,
+  &quot;login_pw&quot;：md5加密的密码,
+  &quot;auth_key&quot;:  &lt;auth_key&gt;
+}
+</code></pre>
+
+<ul>
+	<li>登录成功</li>
+</ul>
+
+<pre><code>{
+  &quot;error&quot;:0,
+  &quot;user_id&quot;: id
+  &quot;token&quot;:&quot;Ni0xNDg1MTkyNjA5LUleJGVGKTRkJGFZeEdJSng=&quot;
+}
+</code></pre>
+
+<p>注意：登录成功后，需要保存 user_id 保存到本地</p>
+
+<ul>
+	<li>登录失败 Account Not Found &amp; Wrong Password</li>
+</ul>
+
+<pre><code>{
+  &quot;error&quot;: 406,
+  &quot;time&quot;: 1485192870
+}
+</code></pre>
+
+<ul>
+	<li>登录失败 （账户被禁用）</li>
+</ul>
+
+<pre><code> {
+   &quot;error&quot;: 407,
+   &quot;time&quot;: 1485192910
+ }
+</code></pre>
+
+<h3>用户注销</h3>
+
+<p>方法：</p>
+
+<pre><code>{
+  &quot;action&quot;: &quot;user_logout&quot;,
+  &quot;user_id&quot;: id,
+  &quot;auth_key:&quot; &quot;&lt;auth_key&gt;&quot;,
+  &quot;user_token&quot;: &quot;&lt;user_token&gt;&quot;
+}
+</code></pre>
+
+<ul>
+	<li>注销成功</li>
+</ul>
+
+<pre><code>{
+  &quot;error&quot;: 0,
+  &quot;timestamp&quot;: 1485192007
+}
+</code></pre>
+
+<ul>
+	<li>数据库错误</li>
+</ul>
+
+<pre><code>{
+  &quot;error&quot;: 503,
+  &quot;timestamp&quot;: 14851920017
+}
+</code></pre>
+
+<p>注意：如果找不到用户则会返回 400 Bad Request</p>
+
+<h3>用户信息获取</h3>
+
+<p>方法：</p>
+
+<pre><code>{
+  &quot;action&quot;: &quot;user_info&quot;,
+  &quot;user_mail&quot;: &quot;&lt;邮箱&gt;&quot;,
+  &quot;auth_key&quot;: &quot;&lt;auth_key&gt;&quot;,
+  &quot;user_token&quot;: &quot;&lt;user_token&gt;&quot;
+}
+</code></pre>
+
+<ul>
+	<li>获取成功（无 profile）</li>
+</ul>
+
+<pre><code>{
+  &quot;error&quot;: 0,
+  &quot;user_id&quot;: &quot;6&quot;,
+  &quot;mail&quot;: &quot;test2@uozi.org&quot;,
+  &quot;registered_time&quot;: &quot;2017-01-23 16:40:32&quot;,
+  &quot;lastest_login&quot;: &quot;2017-01-23 17:20:07&quot;,
+  &quot;post_count&quot;: &quot;0&quot;,
+  &quot;has_profile&quot;: null,
+  &quot;token&quot;: &quot;Ni0xNDg1MjI1MjA2LTgjQiVoYVZBKnFKMUMod2M=&quot;
+}
+</code></pre>
+
+<ul>
+	<li>获取成功 ( has profile )</li>
+</ul>
+
+<pre><code>{
+  &quot;error&quot;: 0,
+  &quot;user_id&quot;: &quot;6&quot;,
+  &quot;mail&quot;: &quot;test2@uozi.org&quot;,
+  &quot;registered_time&quot;: &quot;2017-01-23 16:40:32&quot;,
+  &quot;lastest_login&quot;: &quot;2017-01-23 17:20:07&quot;,
+  &quot;post_count&quot;: &quot;0&quot;,
+  &quot;has_profile&quot;: &quot;1&quot;,
+  &quot;profile&quot;: {
+    &quot;mobile&quot;: &quot;13800138000&quot;,
+    &quot;birthday&quot;: &quot;2001-8-5&quot;,
+    &quot;gender&quot;: &quot;1&quot;,
+    &quot;province&quot;: &quot;Guangdong&quot;,
+    &quot;area&quot;: &quot;Shenzhen&quot;,
+    &quot;introduction&quot;: &quot;Hello World&quot;
+  },
+  &quot;token&quot;: &quot;Ni0xNDg1MjI1NTgyLTkkb01xQmtUZF5hZmMxMyo=&quot;
+}
+</code></pre>
+
+<ul>
+	<li>获取失败 404 Not Found 未找到该用户</li>
+</ul>
+
+<pre><code> {
+   &quot;error&quot;: 404,
+   &quot;time&quot;: 1485199998
+ }
+</code></pre>
+
+<h3>编辑用户信息</h3>
+
+<p>方法：</p>
+
+<pre><code>{
+ &quot;action&quot;: &quot;user_edit_profile&quot;,
+ &quot;id&quot;: id,
+ &quot;profile&quot;: &quot;&lt;profile的json数组&gt;&quot;,
+ &quot;auth_key&quot;: &quot;&lt;auth_key&gt;&quot;,
+ &quot;user_token&quot; : &quot;&lt;user_token&gt;&quot;
+} 
+</code></pre>
+
+<ul>
+	<li>编辑成功</li>
+</ul>
+
+<pre><code>{
+  &quot;error&quot;: 0,
+  &quot;token&quot;: &quot;Ni0xNDg1MjMxNzA4LXB4M0F0NkpvYTNhdmVqUik=&quot;
+}
+</code></pre>
+
+<ul>
+	<li>编辑失败 e.g 404 找不到该用户</li>
+</ul>
+
+<pre><code>{
+	  &quot;error&quot;: 404,
+  &quot;time&quot;: 148520032
+  }
+</code></pre>
+
+<h3>用户上传头像</h3>
+
+<ul>
+	<li> 方法</li>
+</ul>
+
+<pre><code>{
+  &quot;action&quot;: &quot;upload_avatar&quot;,
+  &quot;user_id&quot;: &lt;user_id&gt;,
+  &quot;img&quot;: &quot;&lt;OSS 上传回调文件名&gt;&quot;,
+  &quot;auth_key&quot;: &quot;&lt;auth_key&gt;&quot;,
+  &quot;user_token&quot; : &quot;&lt;user_token&gt;&quot;
+}
+</code></pre>
+
+<ul>
+	<li>上传成功</li>
+</ul>
+
+<pre><code>{
+  &quot;error&quot;: 0,
+  &quot;token&quot;: &quot;&lt;token&gt;&quot;
+}
+</code></pre>
+
+<ul>
+	<li>API 信息同步上传失败 （400 超时）</li>
+</ul>
+
+<h3>同步发布文章</h3>
+
+<p>方法：</p>
+
+<pre><code>{
+  &quot;action&quot;: &quot;post_content&quot;,
+  &quot;user_id&quot;: &quot;6&quot;,
+  &quot;title&quot;: &quot;&lt;标题&gt;&quot;,
+  &quot;content&quot;: &quot;&lt;内容&gt;&quot;,
+  &quot;type&quot;: 1, //文章类型 草稿为 0 普通文章为1 密码文章为2
+  &quot;auth_key&quot;: &quot;&lt;auth_key&gt;&quot;,
+  &quot;user_token&quot; : &quot;&lt;user_token&gt;&quot;
+}
+</code></pre>
+
+<ul>
+	<li>发布成功</li>
+</ul>
+
+<pre><code>{
+  &quot;error&quot;: 0,
+  &quot;post_id&quot;: &quot;19&quot;,
+  &quot;post_date&quot;: &quot;2017-01-24 13:41:30&quot;,
+  &quot;post_date_gmt&quot;: &quot;2017-01-24 05:41:30&quot;,
+  &quot;token&quot;: &quot;Ni0xNDg1MjM2NDkwLWxCZVF2MUw1QyFEaCRCR08=&quot;
+}
+</code></pre>
+
+<ul>
+	<li>发布失败 503 数据库错误</li>
+</ul>
+
+<pre><code>{
+  &quot;error&quot;: 503,
+  &quot;timestamp&quot;: 14851923017
+}
+</code></pre>
+
+<h3>同步编辑文章</h3>
+
+<p>方法：</p>
+
+<pre><code>{
+  &quot;action&quot;: &quot;post_edit_content&quot;,
+  &quot;user_id&quot;: &quot;6&quot;,
+  &quot;post_id&quot; : 19,
+  &quot;title&quot;: &quot;&lt;标题&gt;&quot;,
+  &quot;content&quot;: &quot;&lt;内容&gt;&quot;,
+  &quot;type&quot;: 1, //文章类型
+  &quot;auth_key&quot;: &quot;&lt;auth_key&gt;&quot;,
+  &quot;user_token&quot; : &quot;&lt;user_token&gt;&quot;
+}
+</code></pre>
+
+<ul>
+	<li>编辑成功</li>
+</ul>
+
+<pre><code>{
+  &quot;error&quot;: 0,
+  &quot;token&quot;: &quot;Ni0xNDg1MjM4MDUwLTd3QGU0YVdPYlN5SV56QFo=&quot;
+}
+</code></pre>
+
+<ul>
+	<li>编辑失败 403 无权编辑</li>
+</ul>
+
+<pre><code>{
+  &quot;error&quot;: 403,
+  &quot;timestamp&quot;: 14851923117
+}
+</code></pre>
+
+<ul>
+	<li>编辑失败 404 没有找到该文章</li>
+</ul>
+
+<pre><code>{
+  &quot;error&quot;: 404,
+  &quot;timestamp&quot;: 14851923217
+}
+</code></pre>
+
+<ul>
+	<li>编辑失败 503 数据库错误</li>
+</ul>
+
+<pre><code>{
+  &quot;error&quot;: 503,
+  &quot;timestamp&quot;: 14851923317
+}
+</code></pre>
+
+<h4>同步删除文章</h4>
+
+<p>方法：</p>
+
+<pre><code>{
+   &quot;action&quot;: &quot;delete_content&quot;,
+   &quot;user_id&quot;: &quot;6&quot;,
+   &quot;post_id&quot;: &lt;文章id&gt;,
+   &quot;auth_key&quot;: &quot;&lt;auth_key&gt;&quot;,
+   &quot;user_token&quot; : &quot;&lt;user_token&gt;&quot;
+ }
+</code></pre>
+
+<ul>
+	<li>删除成功</li>
+</ul>
+
+<pre><code>{
+  &quot;error&quot;: 0,
+  &quot;token&quot;: &quot;Ni0xNDg1MjM4NzI1LUpnSiR5KXJ0WnY3XkJqJlU=&quot;
+}
+</code></pre>
+
+<ul>
+	<li>删除失败 </li>
+</ul>
+
+<ol>
+	<li>404 文章未找到</li>
+	<li>503 数据库错误</li>
+	<li>403 无权限删除</li>
+</ol>
+
+<h3>点赞</h3>
+
+<ul>
+	<li>方法</li>
+</ul>
+
+<pre><code>{
+   &quot;action&quot;: &quot;favour&quot;,
+   &quot;post_id&quot;: &lt;文章id&gt;,
+   &quot;auth_key&quot;: &quot;&lt;auth_key&gt;&quot;,
+   &quot;user_token&quot; : &quot;&lt;user_token&gt;&quot;
+ }
+</code></pre>
+
+<ul>
+	<li>点赞成功</li>
+</ul>
+
+<pre><code>{
+  &quot;error&quot;: 0,
+  &quot;token&quot;: &quot;&lt;user_token&gt;&quot;
+}
+</code></pre>
+
+<ul>
+	<li>请求失败 （连接超时）</li>
+</ul>
+
+</body>
+</html>
+

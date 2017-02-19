@@ -101,10 +101,11 @@ class cls_mysqli {
       $result = $sql->fetch_all();
       //print_r($result[$i]);
       $num = count($result);
-
+      global $user;
       for($i=0; $i<$num; $i++) {
         $list[$i]['post_id'] = $result[$i][0];
         $author = $this->fetch_array('SELECT * FROM `api_users` WHERE `ID` = '.$result[$i][1]);
+        $list[$i]['post_avatar'] = $user->get_option($result[$i][1], 'avatar');
         $list[$i]['post_author'] = $author['user_displayname'];
         $list[$i]['post_title'] = $result[$i][2];
         $list[$i]['post_img'] = $result[$i][3];

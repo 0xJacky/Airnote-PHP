@@ -99,7 +99,7 @@ class cls_mysqli {
       $sql = $this->query($sql);
       //$array =  mysqli_fetch_array($sql);
       $result = $sql->fetch_all();
-    //  print_r($result);
+      //print_r($result[$i]);
       $num = count($result);
 
       for($i=0; $i<$num; $i++) {
@@ -108,6 +108,7 @@ class cls_mysqli {
         $list[$i]['post_author'] = $author['user_displayname'];
         $list[$i]['post_title'] = $result[$i][2];
         $list[$i]['post_img'] = $result[$i][3];
+        $list[$i]['favour'] = $result[$i][4];
       }
       return $list;
     }

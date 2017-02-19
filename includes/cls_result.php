@@ -173,7 +173,7 @@ class cls_result {
   function all_post_list()
   {
     global $db;
-    $array = $db->fetch_all('SELECT `ID`, `post_author`, `post_title`, `post_img` FROM `api_posts` ORDER BY `api_posts`.`post_date` DESC');
+    $array = $db->fetch_all('SELECT `ID`, `post_author`, `post_title`, `post_img`, `favour` FROM `api_posts` ORDER BY `api_posts`.`post_date` DESC');
     $message = array(
       'error' => 0,
       'post_list' => $array,

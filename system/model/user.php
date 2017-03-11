@@ -72,5 +72,28 @@ class user extends Model
     }
     return 503;
   }
+
+  function get_info($mail) {
+    $sql = 'SELECT `ID`, `name`, `registered_time`, `lastest_active`, `avatar`, `favour`  FROM `api_users` WHERE `mail` = \''.$mail.'\'';
+    $token = $this->auth->generate_token($result['ID']);
+    $result = $this->db->fetch_array($sql);
+    if(!empty($result))  {
+      $result = array(
+        'status' => 200,
+        'content' => array(
+          'ID' => $result['ID'],
+          'Name' => $result['name'],
+          'registered_time' => $result['registered_time'],
+          'lastest_active' => $result['lastest_active'],
+          'avatar' => $result['avatar'],
+          'favour' => $result['favour'],
+          'token' => $token
+        ),
+      );
+      return $result;
+    }
+    $result['status'] = 404;
+    return $result;
+  }
 }
 ?>

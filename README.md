@@ -9,7 +9,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 You should have received a copy of the GNU Affero General Public License along with this program. If not, see http://www.gnu.org/licenses/.
 
 ## Nginx URL Rewrite
-try_files $uri $uri/ @rewrite;
+try\_files $uri $uri/ @rewrite;
 location @rewrite {
 	rewrite ^([^/]+) /index.php;
 }
@@ -125,7 +125,7 @@ location @rewrite {
 {
   "status": 200,
   "info": "Login Successfully",
-  "result": {
+  "content": {
     "ID": "1",
     "token": "MS0xNDg5MjQ0NTc5LSpUSlhGT3JaMzJqTEtVUGk="
   }
@@ -151,5 +151,63 @@ location @rewrite {
   "version": "2.0"
 }
 ```
+#### 用户注销
+- POST
+```
+{
+    "method": "user_logout",
+    "id": <id>,
+    "token": <token>,
+    "auth_key:" <auth_key>
+ }
+```
+- 成功
+```
+{
+  "status": 200,
+  "info": "Logout Success",
+  "timestamp": 1489256669,
+  "version": "2.0"
+}
+```
+#### 用户信息获取
+- POST
+```
+{
+    "method": "user_info",
+    "id": <id>, //self id
+    "mail": <mail>, //
+    "token": <token>,
+    "auth_key:" <auth_key>
+ }
+```
+
+- 成功
+```
+{
+  "status": 200,
+  "info": "User info get successfully",
+  "content": {
+    "ID": "1",
+    "Name": "0xJacky",
+    "registered_time": "2017-03-11 21:09:24",
+    "lastest_active": "2017-03-12 02:24:29",
+    "avatar": "null",
+    "favour": "0",
+    "token": "LTE0ODkyNTc4OTUtTSViI0E2UGdBVnpaRFd0Kg=="
+  }
+}
+```
+
+- 失败 404 User Not Found 未找到该用户
+```
+{
+  "status": 404,
+  "info": "User Not Found",
+  "timestamp": 1489257939,
+  "version": "2.0"
+}
+```
+TODO: User Edit Profile
 ### 文章类
 - 正在开发中

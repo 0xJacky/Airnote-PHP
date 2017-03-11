@@ -49,7 +49,7 @@ class http
       'info' => $info
     );
     if ( $content !== NULL ) {
-      $message['result'] = $content;
+      $message['content'] = $content;
     } else {
       $message['timestamp'] = time();
       $message['version'] = API_VERSION;

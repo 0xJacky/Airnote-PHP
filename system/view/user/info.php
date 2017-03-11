@@ -1,9 +1,9 @@
 <?php
-if (isset($_POST['user_mail'])) {
-  $result = $this->user->get_info($_POST['user_mail']);
+if (isset($_POST['mail'])) {
+  $result = $this->user->get_info($_POST['mail']);
   switch ($result['status']) {
     case '200':
-      $this->http->response(200, $result['profile'], $result['token']);
+      $this->http->response(200, 'User info get successfully', $result['content']);
       break;
     case '404':
       $this->http->response(404, 'User Not Found');

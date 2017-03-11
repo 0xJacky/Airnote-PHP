@@ -1,6 +1,6 @@
 <?php
 if (isset($_POST['user_id']) && isset($_POST['img'])) {
-    $result = $this->user_model->upload_avatar($id, $img);
+    $result = $this->user->upload_avatar($id, $img);
     switch ($result['status']) {
       case '200':
         $this->http->respone(200, 'Upload Successfully', $result['token']);

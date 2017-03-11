@@ -1,6 +1,6 @@
 <?php
 if (isset($_POST['user_id'])) {
-  $result = $this->user_model->logout($_POST['user_id']);
+  $result = $this->user->logout($_POST['user_id']);
   switch ($result) {
     case '200':
     $this->http->respone(200, 'Logout Success');

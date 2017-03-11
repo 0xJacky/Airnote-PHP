@@ -134,7 +134,7 @@ class db {
     {
         if ($message)
         {
-            echo "API info: $message";
+            echo "API DataBase info: $message";
         }
         else
         {

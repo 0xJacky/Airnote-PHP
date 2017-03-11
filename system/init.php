@@ -30,7 +30,7 @@ require('config.php');
 require(CLASS_PATH . 'mysqli.php');
 
 /* Setup Model Class */
-//require(CLASS_PATH . 'model.php');
+require(CLASS_PATH . 'model.php');
 
 /* Setup Controller Class */
 require(CLASS_PATH . 'controller.php');
@@ -40,8 +40,8 @@ require(CLASS_PATH . 'http.php');
 $http = new http();
 
 /* Load Models */
-//require(M_PATH.'model.php');
-
+require(M_PATH.'user.php');
+require(M_PATH.'post.php');
 /* Setup Url Helper Class */
 //require(CLASS_PATH . 'urlhelper.php');
 
@@ -50,5 +50,5 @@ require(C_PATH.'api.php');
 $api = new API();
 
 /* Load helper functions */
-require(CLASS_PATH . 'functions.php');
+//require(CLASS_PATH . 'functions.php');
 ?>

@@ -2,6 +2,10 @@
 /**
  * Controller Core
  */
+ if (!defined("IN_JIANJI")) {
+   exit();
+ }
+ 
 class Controller
 {
   protected $view;
@@ -10,6 +14,7 @@ class Controller
   {
     //$this->model = new model();
     $this->http = new http();
+    $this->user = new user();
   }
 
   public function load($post, $content = '')

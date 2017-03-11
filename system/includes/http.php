@@ -39,20 +39,23 @@ class http
   	header("Status: ".$info);
   	header("Content-type: application/json; charset=UTF-8");
     $this->response($type, $info);
+    exit();
   }
 
   function response($type = '200', $info, $token = NULL) {
+    header("Content-type: application/json; charset=UTF-8");
     $message = array(
       'status' => $type,
       'info' => $info
     );
-    if ( $generate_token !== NULL ) {
+    if ( $token !== NULL ) {
       $message['token'] = $this->auth->generate_token();
     } else {
       $message['timestamp'] = time();
       $message['version'] = API_VERSION;
     }
     echo json_encode($message);
+    exit();
   }
 }
 

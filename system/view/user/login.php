@@ -1,6 +1,6 @@
 <?php
 if (isset($_POST['user_mail']) && isset($_POST['login_pw'])) {
-  $result = $this->user_model->login($_POST['user_mail'], $_POST['login_pw']);
+  $result = $this->user->login($_POST['user_mail'], $_POST['login_pw']);
   switch ($result['status']) {
     case '200':
     $this->http->respone(200, 'Login Successfully', $result['token']);

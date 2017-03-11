@@ -1,9 +1,9 @@
 <?php
 if (isset($_POST['user_mail']) && isset($_POST['login_pw'])) {
   $result = $this->user_model->login($_POST['user_mail'], $_POST['login_pw']);
-  switch ($result) {
+  switch ($result['status']) {
     case '200':
-    $this->http->respone(200, 'Login Success');
+    $this->http->respone(200, 'Login Successfully', $result['token']);
     break;
     case '406':
     $this->http->respone(406, 'Account Not Found & Wrong Password');

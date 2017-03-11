@@ -41,12 +41,12 @@ class http
     $this->response($type, $info);
   }
 
-  function response($type = '200', $info, $generate_token = false) {
+  function response($type = '200', $info, $token = NULL) {
     $message = array(
       'status' => $type,
       'info' => $info
     );
-    if ( $generate_token == ture ) {
+    if ( $generate_token !== NULL ) {
       $message['token'] = $this->auth->generate_token();
     } else {
       $message['timestamp'] = time();

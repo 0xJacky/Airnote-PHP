@@ -1,9 +1,9 @@
 <?php
 if(isset($_POST['register_name']) && isset($_POST['register_pw']) && isset($_POST['register_mail'])) {
   $result = $this->user_model->register($_POST['register_name']), $_POST['register_pw'], $_POST['register_mail']);
-  switch ($result) {
+  switch ($result['status']) {
     case '200':
-    $this->http->respone(200, 'Register Success');
+    $this->http->respone(200, $result['content'], $result['token']);
     break;
     case '4051':
     $this->http->respone(4051, 'You have registered');

@@ -1,27 +1,19 @@
 <?php
 /**
- * 笺记 API MySQLi 公用类库
- * By 0xJacky
- * 2017-1-20
-**/
+* JianJi MySQLi Common Class Library
+*/
 
-if ( !defined('IN_JianJi') && !defined('ROOT_PATH') ) {
-  die('Boom');
+if ( !defined('IN_JIANJI') && !defined('ROOT_PATH') ) {
+  die();
 }
 
-class cls_mysqli {
+class db {
 
     var $error_message  = array();
 
     function __construct($db_host, $db_user, $db_pw, $db_name) {
 
-      $this->cls_mysqli($db_host, $db_user, $db_pw, $db_name);
-
-    }
-
-    function cls_mysqli($db_host, $db_user, $db_pw, $db_name) {
-
-        $this->connect($db_host, $db_user, $db_pw, $db_name);
+      $this->connect($db_host, $db_user, $db_pw, $db_name);
 
     }
 
@@ -94,24 +86,28 @@ class cls_mysqli {
         return mysqli_fetch_assoc($query);
     }
 
-    function fetch_all($sql)
+    function fetch_all($sql, $result_type = MYSQLI_ASSOC)
     {
       $sql = $this->query($sql);
-      //$array =  mysqli_fetch_array($sql);
-      $result = $sql->fetch_all();
-      //print_r($result[$i]);
-      $num = count($result);
-      global $user;
-      for($i=0; $i<$num; $i++) {
-        $list[$i]['post_id'] = $result[$i][0];
-        $author = $this->fetch_array('SELECT * FROM `api_users` WHERE `ID` = '.$result[$i][1]);
-        $list[$i]['post_avatar'] = $user->get_option($result[$i][1], 'avatar');
-        $list[$i]['post_author'] = $author['user_displayname'];
-        $list[$i]['post_title'] = $result[$i][2];
-        $list[$i]['post_img'] = $result[$i][3];
-        $list[$i]['favour'] = $result[$i][4];
-      }
-      return $list;
+      return mysqli_fetch_all($sql, $result_type);
+    }
+
+    function result($query, $row = 0)
+    {
+			$result = false;
+			$numrows = mysqli_num_rows($query);
+			if ($numrows && $row <= ($numrows - 1) && $row >=0){
+				mysqli_data_seek($query, $row);
+				$resrow = mysqli_fetch_row($query);
+				if (isset($resrow[0])){
+					$result = $resrow[0];
+				}
+			}
+  		return $result;
+    }
+
+    function real_escape_string($data) {
+      return mysqli_real_escape_string($this->link_id, $data);
     }
 
     function free_result($data)
@@ -123,7 +119,6 @@ class cls_mysqli {
     {
         return mysqli_close($this->link_id);
     }
-
 
     function error()
     {

@@ -25,14 +25,44 @@ class user extends Model
       return 4053;
     }
     $time = date("Y-m-d H:i:s", strtotime('now'));
-    $sql = "INSERT INTO `api_users` (`user_name`, `user_pass`, `user_mail`, `user_status`, `user_login`, `registered_time`, `lastest_login`, `user_token`)";
-    $sql .= "VALUES ('$name', '$pwd', '$mail', 1, 1, '$time', '$time', 'null')";
+    $sql = "INSERT INTO `api_users` (`name`, `sha1_pwd`, `mail`, `status`, `is_login`, `registered_time`, `lastest_active`, `token`, `avatar`, `favour`)";
+    $sql .= "VALUES ('$name', '$pwd', '$mail', 1, 1, '$time', '$time', 'null', 'null', 0)";
     $result = $this->db->query($sql);
     if ($result == false) {
       return 503;
     } else {
       return 200;
     }
+  }
+
+  function login($mail, $pwd) {
+    $try = 'SELECT `ID`, `sha1_pwd`, `mail`, `status` FROM `api_users` WHERE `mail` = \''.$mail.'\'';
+    $result = $this->db->fetch_array($try);
+    $token = $this->auth->generate_token($result['ID']);
+    $time = date("Y-m-d H:i:s", strtotime('now'));
+    if (empty($result) || $pwd !== $result['sha1_pwd']) {
+      $result['status'] = 406;
+      return $result;
+    } elseif ($result['status'] == 0) {
+      $result['status'] = 407;
+      return $result;
+    } elseif ($pwd == $result['sha1_pwd']) {
+      $sql = 'UPDATE `api_users` SET `is_login` = \'1\', `lastest_active` = \''.$time.'\', `token` = \''.$token.'\' WHERE `mail` = \''.$mail.'\'';
+      if( $this->db->query($sql) == false ) {
+        $result['status'] = 503;
+        return $result;
+      } else {
+        $result = array(
+          'status' => 200,
+          'content' => array(
+            'ID' => $result['ID'],
+            'token' => $token
+          ),
+        );
+        return $result;
+      }
+    }
+
   }
 }
 ?>

@@ -42,14 +42,14 @@ class http
     exit();
   }
 
-  function response($type = '200', $info, $token = NULL) {
+  function response($type = '200', $info, $content = NULL) {
     header("Content-type: application/json; charset=UTF-8");
     $message = array(
       'status' => $type,
       'info' => $info
     );
-    if ( $token !== NULL ) {
-      $message['token'] = $this->auth->generate_token();
+    if ( $content !== NULL ) {
+      $message['result'] = $content;
     } else {
       $message['timestamp'] = time();
       $message['version'] = API_VERSION;

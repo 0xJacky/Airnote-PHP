@@ -41,7 +41,11 @@ $http = new http();
 
 /* Load Models */
 require(M_PATH.'user.php');
+
 require(M_PATH.'post.php');
+/* Setup Auth Class */
+require(CLASS_PATH . 'auth.php');
+
 /* Setup Url Helper Class */
 //require(CLASS_PATH . 'urlhelper.php');
 

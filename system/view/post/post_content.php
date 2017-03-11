@@ -3,16 +3,16 @@ if (isset($_POST['user_id']) && isset($_POST['title']) && isset($_POST['content'
     $result = $this->post_model->post_content($_POST['user_id'], $_POST['title'], $_POST['content'], $_POST['post_img'], $_POST['type']) {
     switch ($result['status']) {
       case '200':
-      $this->http->respone(200, $result['content'], $result['token']);
+      $this->http->response(200, $result['content'], $result['token']);
       break;
       case '407':
-      $this->http->respone(407, 'Account Banned');
+      $this->http->response(407, 'Account Banned');
       break;
       case '503':
-      $this->http->respone(503, 'DataBase Error');
+      $this->http->response(503, 'DataBase Error');
       break;
       default:
-      $this->http->respone(503, 'DataBase Error');
+      $this->http->response(503, 'DataBase Error');
       break;
     }
   }

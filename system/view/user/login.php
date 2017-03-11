@@ -1,21 +1,21 @@
 <?php
-if (isset($_POST['user_mail']) && isset($_POST['login_pw'])) {
-  $result = $this->user->login($_POST['user_mail'], $_POST['login_pw']);
+if (isset($_POST['mail']) && isset($_POST['pwd'])) {
+  $result = $this->user->login($_POST['mail'], $_POST['pwd']);
   switch ($result['status']) {
     case '200':
-    $this->http->respone(200, 'Login Successfully', $result['token']);
+    $this->http->response(200, 'Login Successfully', $result['content']);
     break;
     case '406':
-    $this->http->respone(406, 'Account Not Found & Wrong Password');
+    $this->http->response(406, 'Account Not Found & Wrong Password');
     break;
     case '407':
-    $this->http->respone(407, 'Account Banned');
+    $this->http->response(407, 'Account Banned');
     break;
     case '503':
-    $this->http->respone(503, 'DataBase Error');
+    $this->http->response(503, 'DataBase Error');
     break;
     default:
-    $this->http->respone(503, 'DataBase Error');
+    $this->http->response(503, 'DataBase Error');
     break;
   }
 }

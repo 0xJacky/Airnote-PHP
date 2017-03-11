@@ -1,7 +1,7 @@
 <?php
 /**
- * API User class model
- */
+* API User class model
+*/
 class user extends Model
 {
 
@@ -26,7 +26,7 @@ class user extends Model
     }
     $time = date("Y-m-d H:i:s", strtotime('now'));
     $sql = "INSERT INTO `api_users` (`name`, `sha1_pwd`, `mail`, `status`, `is_login`, `registered_time`, `lastest_active`, `token`, `avatar`, `favour`)";
-    $sql .= "VALUES ('$name', '$pwd', '$mail', 1, 1, '$time', '$time', 'null', 'null', 0)";
+    $sql .= "VALUES ('$name', '$pwd', '$mail', 1, 1, '$time', '$time', 'NULL', 'NULL', 0)";
     $result = $this->db->query($sql);
     if ($result == false) {
       return 503;
@@ -62,7 +62,15 @@ class user extends Model
         return $result;
       }
     }
+  }
 
+  function logout($id) {
+    $time = date("Y-m-d H:i:s", strtotime('now'));
+    $sql = 'UPDATE `api_users` SET `is_login` = \'0\', `lastest_active` = \''.$time.'\', `token` = \'NULL\' WHERE `ID` = \''.$id.'\'';
+    if ($this->db->query($sql)) {
+      return 200;
+    }
+    return 503;
   }
 }
 ?>

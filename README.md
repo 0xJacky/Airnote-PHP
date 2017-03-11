@@ -1,6 +1,18 @@
 # JianJi-PHP
 
 JianJi Project PHP Server v2
+Designed by 0xJacky
+Copyright © 2013-2017 UoziTech 2017
+The program is distributed under the terms of the GNU Affero General Public License.
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+You should have received a copy of the GNU Affero General Public License along with this program. If not, see http://www.gnu.org/licenses/.
+
+## Nginx URL Rewrite
+try_files $uri $uri/ @rewrite;
+location @rewrite {
+	rewrite ^([^/]+) /index.php;
+}
 
 ## 协议 Protocol
 1. auth\_key: sha1(当前UNIX时间戳, 盐) 加密后得到的一个拥有 32 个字符的字符串
@@ -10,7 +22,7 @@ JianJi Project PHP Server v2
 	字符串由服务器生成并返回，无需校验其有效性，只需要需要保存到本地以备后续使用即可。PS: user\_token 没有时间限制
 3. 请注意用户密码传输过程前需要使用 sha1 加密
 
-### 通信测试
+### 通信测试 & 基本状态
 - POST
 ```
 {
@@ -33,6 +45,15 @@ JianJi Project PHP Server v2
   "status": 400,
   "info": "400 Bad Request",
   "timestamp": 1489213274,
+  "version": "2.0"
+}
+```
+-  503 DataBase Error 数据库错误
+```
+{
+  "status": 503,
+  "info": "DataBase Error",
+  "timestamp": 1489244822,
   "version": "2.0"
 }
 ```
@@ -130,15 +151,5 @@ JianJi Project PHP Server v2
   "version": "2.0"
 }
 ```
-- 503 DataBase Error 数据库错误
-```
-{
-  "status": 503,
-  "info": "DataBase Error",
-  "timestamp": 1489244822,
-  "version": "2.0"
-}
-```
-
 ### 文章类
 - 正在开发中

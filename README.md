@@ -9,11 +9,12 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 You should have received a copy of the GNU Affero General Public License along with this program. If not, see http://www.gnu.org/licenses/.
 
 ## Nginx URL Rewrite
+```
 try\_files $uri $uri/ @rewrite;
 location @rewrite {
 	rewrite ^([^/]+) /index.php;
 }
-
+```
 ## 协议 Protocol
 1. auth\_key: sha1(当前UNIX时间戳, 盐) 加密后得到的一个拥有 32 个字符的字符串
 	注意：密钥有效期为1秒，也就是说 auth\_key  是一个动态密钥

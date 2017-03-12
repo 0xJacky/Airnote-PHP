@@ -33,10 +33,6 @@ class API extends Controller
     $this->load('user/edit_profile');
   }
 
-  function user_upload_avatar() {
-    $this->load('user/upload_avatar');
-  }
-
   function post_list() {
     $this->load('post/list');
   }

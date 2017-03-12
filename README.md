@@ -199,7 +199,8 @@ location @rewrite {
     "Name": "0xJacky",
     "registered_time": "2017-03-11 21:09:24",
     "lastest_active": "2017-03-12 02:24:29",
-    "avatar": "null",
+    "avatar": "NULL",
+        "introduction": "NULL",
     "favour": "0",
     "token": "LTE0ODkyNTc4OTUtTSViI0E2UGdBVnpaRFd0Kg=="
   }
@@ -215,6 +216,25 @@ location @rewrite {
   "version": "2.0"
 }
 ```
-TODO: User Edit Profile
+#### 用户信息修改
+```
+{
+    "method": "user_info",
+    "id": <id>,
+    "request": <profile_type>, // 头像: avatar 简介(<255): introduction 名称: name
+    "token": <token>,
+    "auth_key:" <auth_key>
+}
+```
+- 成功
+```
+{
+  "status": 200,
+  "info": "Edit Successfully",
+  "content": {
+    "token": "MS0xNDg5MzA4ODUyLSFlOHRuWnU3ZHVxdyNSM1Q="
+  }
+}
+```
 ### 文章类
 - 正在开发中

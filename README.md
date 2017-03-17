@@ -66,10 +66,10 @@ location @rewrite {
 {
     "method": "user",
     "action": "register",
-    "name": <register_name>,
-    "pwd": <register_pwd>,
-    "mail": <register_mail>,
-    "auth_key:" <auth_key>
+    "name": "0xJacky",
+    "pwd": "****************",
+    "mail": "jacky@uozi.org",
+    "auth_key": "****************"
 }
 ```
 
@@ -117,9 +117,9 @@ location @rewrite {
 {
    "method": "user",
    "action": "login",
-   "mail": <mail>,
-   "pwd": <sha1_pwd>,
-   "auth_key:" <auth_key>
+   "mail": "jacky@uozi.org",
+   "pwd": "****************",
+   "auth_key": "****************"
 }
 ```
 
@@ -160,9 +160,9 @@ location @rewrite {
 {
     "method": "user",
     "action": "logout",
-    "id": <id>,
-    "token": <token>,
-    "auth_key:" <auth_key>
+    "id": 1,
+    "token": "MS0xNDg5MjQ0NTc5LSpUSlhGT3JaMzJqTEtVUGk=",
+    "auth_key": "****************"
  }
 ```
 - 成功
@@ -180,10 +180,10 @@ location @rewrite {
 {
     "method": "user",
     "action": "info",
-    "id": <id>, //self id
-    "mail": <mail>, //
-    "token": <token>,
-    "auth_key:" <auth_key>
+    "id": 1,
+    "mail": "other@uozi.org", //
+    "token": "****************",
+    "auth_key": "****************"
  }
 ```
 
@@ -215,14 +215,15 @@ location @rewrite {
 }
 ```
 #### 用户信息修改
+request: 头像: avatar, 简介(<255): introduction, 名称: name
 ```json
 {
     "method": "user",
     "action": "edit_profile",
-    "id": <id>,
-    "request": <profile_type>, // 头像: avatar 简介(<255): introduction 名称: name
-    "token": <token>,
-    "auth_key": <auth_key>
+    "id": 1,
+    "request": "introduction",
+    "token": "LTE0ODkyNTc4OTUtTSViI0E2UGdBVnpaRFd0Kg==",
+    "auth_key": "****************"
 }
 ```
 - 成功
@@ -237,17 +238,18 @@ location @rewrite {
 ```
 ### 文章类
 #### 发布文章
+type: 文章类型，目前默认为 1
 ```json
 {
     "method": "post",
     "action": "post",
-    "user_id": <user_id>,
-    "title": <title>,
-    "content": <content>,
-    "img": <img_relative_url>,
-    "type": <type>, //文章类型，目前默认为 1
-    "auth_key": <auth_key>，
-    "token": <token>
+    "user_id": 1,
+    "title": "test",
+    "content": "test content",
+    "img": "img_relative_url.png",
+    "type": 1,
+    "auth_key": "****************",
+    "token": "****************"
 }
 ```
 - 成功
@@ -272,8 +274,8 @@ location @rewrite {
     "content": <content>,
     "img": <img_relative_url>,
     "type": <type>, //文章类型，目前默认为 1
-    "auth_key": <auth_key>，
-    "token": <token>
+    "auth_key": "****************",
+    "token": "MS0xNDg5NzYyMDMzLW9HVHNEUiFQc2lMTUomYWk="
 }
 ```
 - 成功

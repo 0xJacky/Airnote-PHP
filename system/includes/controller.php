@@ -14,15 +14,15 @@ class Controller
   {
     $this->http = new http();
     $this->user = new user();
-    //$this->post = new post();
+    $this->post = new post();
   }
 
-  public function load($post, $content = '')
+  public function load($file, $dir)
   {
-    if (!file_exists(V_PATH.'/'.$post.'.php')) {
+    if (!file_exists(V_PATH.'/'.$dir.'/'.$file.'.php')) {
       exit($this->http->info(404));
     }
-    return require(V_PATH.'/'.$post.'.php');
+    return require(V_PATH.'/'.$dir.'/'.$file.'.php');
   }
 }
 ?>

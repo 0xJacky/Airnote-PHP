@@ -1,6 +1,6 @@
 <?php
 if (isset($_POST['user_id']) && isset($_POST['post_id'])) {
-  $result = $this->post_model->favour_content($user_id, $post_id);
+  $result = $this->post->favour_content($user_id, $post_id);
   switch ($result['status']) {
     case '200':
     $this->http->response(200, 'Favour Successfully', $result['token']);

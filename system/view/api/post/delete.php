@@ -1,6 +1,6 @@
 <?php
 if (isset($_POST['user_id']) && isset($_POST['post_id'])) {
-  $result = $this->post_model->post_edit_content($_POST['user_id'], $_POST['post_id']) {
+  $result = $this->post->post_edit_content($_POST['user_id'], $_POST['post_id']) {
   switch ($result['status']) {
     case '200':
     $this->http->response(200, 'Delete Successfully', $result['token']);

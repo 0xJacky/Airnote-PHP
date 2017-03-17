@@ -1,6 +1,6 @@
 <?php
 if (isset($_POST['user_id']) && isset($_POST['post_id']) && isset($_POST['title']) && isset($_POST['content']) && isset($_POST['type'])) {
-  $result = $this->post_model->post_edit_content($_POST['user_id'], $_POST['title'], $_POST['content'], $_POST['post_img'], $_POST['type']) {
+  $result = $this->post->post_edit_content($_POST['user_id'], $_POST['title'], $_POST['content'], $_POST['post_img'], $_POST['type']) {
   switch ($result['status']) {
     case '200':
     $this->http->response(200, 'Edit Successfully', $result['token']);

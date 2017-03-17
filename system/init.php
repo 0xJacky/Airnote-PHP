@@ -40,19 +40,18 @@ require(CLASS_PATH . 'http.php');
 $http = new http();
 
 /* Load Models */
-require(M_PATH.'user.php');
+require(M_PATH.'api/user.php');
+require(M_PATH.'api/post.php');
 
-require(M_PATH.'post.php');
 /* Setup Auth Class */
 require(CLASS_PATH . 'auth.php');
 
-/* Setup Url Helper Class */
-//require(CLASS_PATH . 'urlhelper.php');
-
 /* Load Controllers */
-require(C_PATH.'api.php');
-$api = new API();
+require(C_PATH.'api/user.php');
+require(C_PATH.'api/post.php');
+$userAPI = new userAPI();
+$postAPI = new postAPI();
 
 /* Load helper functions */
-//require(CLASS_PATH . 'functions.php');
+require(CLASS_PATH . 'functions.php');
 ?>

@@ -1,7 +1,4 @@
 <?php
-if(!isset($_POST['name']) && !isset($_POST['pwd']) && !isset($_POST['mail'])) {
-  $this->http->info(400);
-}
 $result = $this->user->register($_POST['name'], $_POST['pwd'], $_POST['mail']);
 switch ($result) {
   case '200':
@@ -22,5 +19,5 @@ switch ($result) {
   default:
   $this->http->response(503, 'DataBase Error');
   break;
-}
+  
 ?>

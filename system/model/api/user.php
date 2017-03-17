@@ -25,8 +25,8 @@ class user extends Model
       return 4053;
     }
     $time = date("Y-m-d H:i:s", strtotime('now'));
-    $sql = "INSERT INTO `api_users` (`name`, `sha1_pwd`, `mail`, `status`, `is_login`, `registered_time`, `lastest_active`, `token`, `avatar`, `introduction`, `favour`)";
-    $sql .= "VALUES ('$name', '$pwd', '$mail', 1, 1, '$time', '$time', 'NULL', 'NULL', 'NULL', 0)";
+    $sql = "INSERT INTO `api_users` (`name`, `sha1_pwd`, `mail`, `status`, `is_login`, `registered_time`, `lastest_active`, `token`, `avatar`, `introduction`)";
+    $sql .= "VALUES ('$name', '$pwd', '$mail', 1, 1, '$time', '$time', 'NULL', 'NULL', 'NULL')";
     $result = $this->db->query($sql);
     if ($result == false) {
       return 503;
@@ -74,9 +74,10 @@ class user extends Model
   }
 
   function get_info($self_id, $mail) {
-    $sql = 'SELECT `ID`, `name`, `registered_time`, `lastest_active`, `avatar`, `favour`  FROM `api_users` WHERE `mail` = \''.$mail.'\'';
+    $sql = 'SELECT `ID`, `name`, `registered_time`, `lastest_active`, `avatar` FROM `api_users` WHERE `mail` = \''.$mail.'\'';
     $token = $this->auth->generate_token($self_id);
     $result = $this->db->fetch_array($sql);
+    $favours = $this->db->fetch_array('SELECT COUNT(`favours`) FROM `api_posts` WHERE `mail` = \''.$mail.'\'');
     if(!empty($result))  {
       $result = array(
         'status' => 200,
@@ -87,7 +88,7 @@ class user extends Model
           'lastest_active' => $result['lastest_active'],
           'avatar' => $result['avatar'],
           'introduction' => $result['introduction'],
-          'favour' => $result['favour'],
+          'favour' => $favours['favours'],
           'token' => $token
         ),
       );

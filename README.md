@@ -18,7 +18,7 @@ You should have received a copy of the GNU Affero General Public License along w
 ```
 try\_files $uri $uri/ @rewrite;
 location @rewrite {
-	rewrite ^([^/]+) /index.php;
+    rewrite ^([^/]+) /index.php;
 }
 ```
 ## 协议 Protocol
@@ -223,7 +223,7 @@ location @rewrite {
     "id": <id>,
     "request": <profile_type>, // 头像: avatar 简介(<255): introduction 名称: name
     "token": <token>,
-    "auth_key:" <auth_key>
+    "auth_key": <auth_key>
 }
 ```
 - 成功
@@ -237,4 +237,28 @@ location @rewrite {
 }
 ```
 ### 文章类
-- 正在开发中
+#### 发布文章
+```
+{
+    "method": "post",
+    "action": "post",
+    "user_id": <user_id>,
+    "title": <title>,
+    "content": <content>,
+    "img": <img_relative_url>,
+    "type": <type>, //文章类型，目前默认为 1
+    "auth_key": <auth_key>，
+    "token": <token>
+}
+```
+- 成功
+```
+{
+  "status": 200,
+  "info": "Post Successfully",
+  "content": {
+    "token": "MS0xNDg5NzYyMDMzLW9HVHNEUiFQc2lMTUomYWk="
+  }
+}
+```
+#### 编辑文章

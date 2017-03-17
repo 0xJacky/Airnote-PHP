@@ -1,8 +1,8 @@
 <?php
-$result = $this->post_model->post_list($_POST['page']);
-switch ($result['status']) {
+$result = $this->user->logout($_POST['id']);
+switch ($result) {
   case '200':
-  $this->http->response(200, $result['content']);
+  $this->http->response(200, 'Logout Success');
   break;
   case '503':
   $this->http->response(503, 'DataBase Error');

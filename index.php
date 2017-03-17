@@ -1,8 +1,8 @@
 <?php
 define("IN_JIANJI", true);
-/* Clean xss at first*/
-include('system/security.php');
-/* todo: Then check token */
-/* Finally include core */
+/* TODO: Check Auth Key at first */
+
+/* Then refer to router system */
 include('system/router.php');
+
 ?>

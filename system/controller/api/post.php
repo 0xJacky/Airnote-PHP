@@ -32,16 +32,27 @@ class postAPI extends Controller
   function is_ok($action) {
     switch ($action) {
       case 'post':
+        if (isset($_POST['user_id'], $_POST['title'], $_POST['content'], $_POST['img'], $_POST['type'])) {
+          $_POST['user_id'] = (int)$_POST['user_id'];
+          $_POST['title'] = xss_clean($_POST['title']);
+          $_POST['content'] = xss_clean($_POST['content']);
+          $_POST['img'] = xss_clean($_POST['img']);
+          $_POST['type'] = (int)$_POST['type'];
+          return true;
+        }
+        die($this->http->info(400));
+      break;
       case 'edit':
-      if (isset($_POST['user_id'], $_POST['title'], $_POST['content'], $_POST['img'], $_POST['type'])) {
-        $_POST['user_id'] = (int)$_POST['user_id'];
-        $_POST['title'] = xss_clean($_POST['title']);
-        $_POST['content'] = xss_clean($_POST['content']);
-        $_POST['img'] = xss_clean($_POST['img']);
-        $_POST['type'] = (int)$_POST['type'];
-        return true;
-      }
-      die($this->http->info(400));
+        if (isset($_POST['user_id'], $_POST['post_id'], $_POST['title'], $_POST['content'], $_POST['img'], $_POST['type'])) {
+          $_POST['user_id'] = (int)$_POST['user_id'];
+          $_POST['post_id'] = (int)$_POST['post_id'];
+          $_POST['title'] = xss_clean($_POST['title']);
+          $_POST['content'] = xss_clean($_POST['content']);
+          $_POST['img'] = xss_clean($_POST['img']);
+          $_POST['type'] = (int)$_POST['type'];
+          return true;
+        }
+        die($this->http->info(400));
       break;
       case 'delete':
       case 'favour':

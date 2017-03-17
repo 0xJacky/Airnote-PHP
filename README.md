@@ -16,15 +16,11 @@ You should have received a copy of the GNU Affero General Public License along w
 
 ## Nginx URL Rewrite
 ```
-try\_files $uri $uri/ @rewrite;
-location @rewrite {
-    rewrite ^([^/]+) /index.php;
-}
+try_files $uri $uri/ /index.php;
 ```
 ## 协议 Protocol
 1. auth\_key: sha1(当前UNIX时间戳, 盐) 加密后得到的一个拥有 32 个字符的字符串
-	注意：密钥有效期为1秒，也就是说 auth\_key  是一个动态密钥
-  如果出现验证错误，主要原因是网络延时造成的，建议重复请求三次
+	注意：密钥有效期为1秒，如果出现验证错误，主要原因是网络延时造成的，建议重复请求三次
 2. user\_token: auth::generate\_token(用户ID.当前UNIX时间戳, 盐) 加密后得到的一个拥有 32 个字符的字符串
 	字符串由服务器生成并返回，无需校验其有效性，只需要需要保存到本地以备后续使用即可。PS: user\_token 没有时间限制
 3. 请注意用户密码传输过程前需要使用 sha1 加密

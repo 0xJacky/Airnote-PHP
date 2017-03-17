@@ -181,7 +181,7 @@ location @rewrite {
     "method": "user",
     "action": "info",
     "id": 1,
-    "mail": "other@uozi.org", //
+    "mail": "other@uozi.org",
     "token": "****************",
     "auth_key": "****************"
  }
@@ -215,7 +215,7 @@ location @rewrite {
 }
 ```
 #### 用户信息修改
-request: 头像: avatar, 简介(<255): introduction, 名称: name
+request: 头像: avatar, 简介(\<255): introduction, 名称: name
 ```json
 {
     "method": "user",
@@ -262,18 +262,28 @@ type: 文章类型，目前默认为 1
   }
 }
 ```
+- 失败 Account Banned 账号被锁定
+```json
+{
+  "status": 407,
+  "info": "Account Banned",
+  "timestamp": 1489764761,
+  "version": "2.0"
+}
+```
 #### 编辑文章
 - POST
+type: 文章类型，目前默认为 1
 ```json
 {
     "method": "post",
     "action": "edit",
-    "user_id": <user_id>,
-    "post_id": <post_id>,
-    "title": <title>,
-    "content": <content>,
-    "img": <img_relative_url>,
-    "type": <type>, //文章类型，目前默认为 1
+    "user_id": 1,
+    "post_id": 1,
+    "title": "test 1",
+    "content": "Post edit",
+    "img": "img_relative_url.png",
+    "type": 1,
     "auth_key": "****************",
     "token": "MS0xNDg5NzYyMDMzLW9HVHNEUiFQc2lMTUomYWk="
 }
@@ -313,5 +323,98 @@ type: 文章类型，目前默认为 1
   "info": "Account Banned",
   "timestamp": 1489764761,
   "version": "2.0"
+}
+```
+#### 点赞
+- POST
+```json
+{
+    "method": "post",
+    "action": "favour",
+    "user_id": 1,
+    "post_id": 1,
+    "token": "LTE0ODkyNTc4OTUtTSViI0E2UGdBVnpaRFd0Kg==",
+    "auth_key": "****************"
+}
+```
+- 成功
+```json
+{
+  "status": 200,
+  "info": "Favour Successfully",
+  "content": {
+    "token": "MS0xNDg5NzY2ODkzLXNhWE43TFhvcWFLeilvTXE="
+  }
+}
+```
+
+- 失败 Post Not Fount or was deleted just now
+```json
+{
+  "status": 404,
+  "info": "Post Not Fount or was deleted just now",
+  "timestamp": 1489767413,
+  "version": "2.0"
+}
+```
+#### 获取社区文章
+page: 分页操作（每页 10 篇文章），建议限制 page 最大增长 ≤ 5
+```json
+{
+    "method": "post",
+    "action": "list",
+    "page": 1,
+    "auth_key": "****************"
+}
+```
+
+- 获取成功
+```json
+{
+  "status": 200,
+  "info": "Geted the page 1",
+  "content": {
+    "post_list": [
+      {
+        "ID": "1",
+        "author": "1",
+        "post_date": "2017-03-17 22:47:13",
+        "title": "测试 title1",
+        "img": "null",
+        "favours": "6",
+        "avatar": "null"
+      }
+    ]
+  }
+}
+```
+
+#### 获取自己的文章
+page: 分页操作（每页 10 篇文章），建议限制 page 最大增长 ≤ 5
+```json
+{
+    "method": "post",
+    "action": "self_list",
+    "page": 1,
+    "user_id": 1,
+    "auth_key": "****************"
+}
+```
+
+- 获取成功
+```json
+{
+  "status": 200,
+  "info": "Geted the page 1",
+  "content": {
+    "post_list": [
+      {
+        "post_date": "2017-03-17 22:47:13",
+        "title": "测试 title1",
+        "img": "null",
+        "favours": "6"
+      }
+    ]
+  }
 }
 ```

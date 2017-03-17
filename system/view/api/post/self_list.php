@@ -1,6 +1,6 @@
 <?php
 $page = (int)$_POST['page'] ? $_POST['page'] : 1;
-$result = $this->post->list($page);
+$result = $this->post->self_list($_POST['user_id'], $page);
 switch ($result['status']) {
   case '200':
   $this->http->response(200, 'Geted the page '.$page, $result['content']);

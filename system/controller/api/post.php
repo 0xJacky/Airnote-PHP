@@ -29,6 +29,10 @@ class postAPI extends Controller
     $this->load('post/favour', 'api');
   }
 
+  function self_list() {
+    $this->load('post/self_list', 'api');
+  }
+
   function is_ok($action) {
     switch ($action) {
       case 'post':
@@ -56,16 +60,23 @@ class postAPI extends Controller
       break;
       case 'delete':
       case 'favour':
-      if (isset($_POST['user_id']) && isset($_POST['post_id'])) {
-        $_POST['user_id'] = (int)$_POST['user_id'];
-        $_POST['post_id'] = (int)$_POST['post_id'];
-        return true;
-      }
-      die($this->http->info(400));
+        if (isset($_POST['user_id'], $_POST['post_id'])) {
+          $_POST['user_id'] = (int)$_POST['user_id'];
+          $_POST['post_id'] = (int)$_POST['post_id'];
+          return true;
+        }
+        die($this->http->info(400));
+      break;
+      case 'self_list':
+        if (isset($_POST['user_id'])) {
+          $_POST['user_id'] = (int)$_POST['user_id'];
+          return true;
+        }
+        die($this->http->info(400));
       break;
 
       default:
-      die($this->http->info(400));
+        die($this->http->info(400));
       break;
     }
   }

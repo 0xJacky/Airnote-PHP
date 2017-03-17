@@ -1,4 +1,8 @@
 <?php
+if (!defined("IN_JIANJI")) {
+  die();
+}
+
 $result = $this->user->login($_POST['mail'], $_POST['pwd']);
 switch ($result['status']) {
   case '200':

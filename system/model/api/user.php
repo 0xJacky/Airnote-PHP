@@ -2,6 +2,10 @@
 /**
 * API User class model
 */
+if (!defined("IN_JIANJI")) {
+  die();
+}
+
 class user extends Model
 {
 

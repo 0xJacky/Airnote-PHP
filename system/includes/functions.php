@@ -1,4 +1,8 @@
 <?php
+if (!defined("IN_JIANJI")) {
+  die();
+}
+
 function xss_clean($data) {
   // Fix &entity\n;
   $data = str_replace(array('&amp;','&lt;','&gt;'), array('&amp;amp;','&amp;lt;','&amp;gt;'), $data);

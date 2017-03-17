@@ -1,4 +1,8 @@
 <?php
+if (!defined("IN_JIANJI")) {
+  die();
+}
+
 $page = (int)$_POST['page'] ? $_POST['page'] : 1;
 $result = $this->post->list($page);
 switch ($result['status']) {

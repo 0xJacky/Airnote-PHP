@@ -2,6 +2,10 @@
 /**
  * JianJi Post Model
  */
+if (!defined("IN_JIANJI")) {
+ die();
+}
+
 class post extends Model
 {
 

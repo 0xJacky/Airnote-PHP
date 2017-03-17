@@ -1,4 +1,8 @@
 <?php
+if (!defined("IN_JIANJI")) {
+  die();
+}
+
 $result = $this->post->post_edit_content($_POST['user_id'], $_POST['post_id']) {
 switch ($result['status']) {
   case '200':

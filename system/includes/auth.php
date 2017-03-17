@@ -6,6 +6,7 @@
 if ( !defined('IN_JIANJI') ) {
   die();
 }
+
 class auth
 {
 

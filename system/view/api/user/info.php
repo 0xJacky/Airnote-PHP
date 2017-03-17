@@ -1,4 +1,8 @@
 <?php
+if (!defined("IN_JIANJI")) {
+  die();
+}
+
 $result = $this->user->get_info($_POST['mail']);
 switch ($result['status']) {
   case '200':

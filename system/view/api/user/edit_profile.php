@@ -1,4 +1,8 @@
 <?php
+if (!defined("IN_JIANJI")) {
+  die();
+}
+
 $result = $this->user->edit_profile($_POST['id'], $_POST['request'], $_POST['content']);
 switch ($result['status']) {
   case '200':

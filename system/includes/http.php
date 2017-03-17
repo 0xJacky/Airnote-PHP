@@ -2,9 +2,10 @@
 /**
  * JianJi HTTP Library
  */
- if (!defined("IN_JIANJI")) {
-   exit();
- }
+if (!defined("IN_JIANJI")) {
+ exit();
+}
+ 
 class http
 {
   function info($type) {

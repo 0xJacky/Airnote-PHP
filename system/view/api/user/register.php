@@ -1,4 +1,8 @@
 <?php
+if (!defined("IN_JIANJI")) {
+  die();
+}
+
 $result = $this->user->register($_POST['name'], $_POST['pwd'], $_POST['mail']);
 switch ($result) {
   case '200':
@@ -19,5 +23,5 @@ switch ($result) {
   default:
   $this->http->response(503, 'DataBase Error');
   break;
-  
+
 ?>

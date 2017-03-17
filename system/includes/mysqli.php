@@ -3,7 +3,7 @@
 * JianJi MySQLi Common Class Library
 */
 
-if ( !defined('IN_JIANJI') && !defined('ROOT_PATH') ) {
+if ( !defined('IN_JIANJI') ) {
   die();
 }
 

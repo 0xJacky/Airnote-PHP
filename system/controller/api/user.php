@@ -2,6 +2,9 @@
 /**
  * API Controller
 **/
+if (!defined("IN_JIANJI")) {
+  die();
+}
 
 class userAPI extends Controller
 {

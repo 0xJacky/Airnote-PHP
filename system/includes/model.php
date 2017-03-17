@@ -2,9 +2,9 @@
 /**
  * Model Setup Class
  */
- if (!defined("IN_JIANJI")) {
-   exit();
- }
+if (!defined("IN_JIANJI")) {
+ exit();
+}
 class Model
 {
   protected $db;

@@ -1,4 +1,8 @@
 <?php
+if (!defined("IN_JIANJI")) {
+  die();
+}
+
 $result = $this->user->logout($_POST['id']);
 switch ($result) {
   case '200':

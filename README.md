@@ -30,13 +30,7 @@ location @rewrite {
 3. 请注意用户密码传输过程前需要使用 sha1 加密
 
 ### 通信测试 & 基本状态
-- POST
-```
-{
-  "method": "ping",
-  "auth_key:" <auth_key>
-}
-```
+- GET /
 - 通信成功
 ```
 {
@@ -70,7 +64,8 @@ location @rewrite {
 - POST
 ```
 {
-   "method": "user_register",
+    "method": "user",
+    "action": "register",
     "name": <register_name>,
     "pwd": <register_pwd>,
     "mail": <register_mail>,
@@ -120,7 +115,8 @@ location @rewrite {
 #### 用户登录
 ```
 {
-  "method": "user_login",
+   "method": "user",
+   "action": "login",
    "mail": <mail>,
    "pwd": <sha1_pwd>,
    "auth_key:" <auth_key>
@@ -162,7 +158,8 @@ location @rewrite {
 - POST
 ```
 {
-    "method": "user_logout",
+    "method": "user",
+    "action": "logout",
     "id": <id>,
     "token": <token>,
     "auth_key:" <auth_key>
@@ -181,7 +178,8 @@ location @rewrite {
 - POST
 ```
 {
-    "method": "user_info",
+    "method": "user",
+    "action": "info",
     "id": <id>, //self id
     "mail": <mail>, //
     "token": <token>,
@@ -219,7 +217,8 @@ location @rewrite {
 #### 用户信息修改
 ```
 {
-    "method": "user_info",
+    "method": "user",
+    "action": "edit_profile",
     "id": <id>,
     "request": <profile_type>, // 头像: avatar 简介(<255): introduction 名称: name
     "token": <token>,
@@ -262,3 +261,55 @@ location @rewrite {
 }
 ```
 #### 编辑文章
+- POST
+```
+{
+    "method": "post",
+    "action": "edit",
+    "user_id": <user_id>,
+    "post_id": <post_id>,
+    "title": <title>,
+    "content": <content>,
+    "img": <img_relative_url>,
+    "type": <type>, //文章类型，目前默认为 1
+    "auth_key": <auth_key>，
+    "token": <token>
+}
+```
+- 成功
+```
+{
+  "status": 200,
+  "info": "Edit Successfully",
+  "content": {
+    "token": "MS0xNDg5NzY0NjU2LSgkMmtWRkA2SkBSKmNAWSg="
+  }
+}
+```
+- 失败 Forbidden 无权限修改 User ID 与 Post ID 不匹配
+```
+{
+  "status": 403,
+  "info": "Forbidden",
+  "timestamp": 1489764687,
+  "version": "2.0"
+}
+```
+- 失败 Post Not Found 文章未找到
+```
+{
+  "status": 404,
+  "info": "Post Not Found",
+  "timestamp": 1489764819,
+  "version": "2.0"
+}
+```
+- 失败 Account Banned 账号被锁定
+```
+{
+  "status": 407,
+  "info": "Account Banned",
+  "timestamp": 1489764761,
+  "version": "2.0"
+}
+```

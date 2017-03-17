@@ -32,7 +32,7 @@ location @rewrite {
 ### 通信测试 & 基本状态
 - GET /
 - 通信成功
-```
+```json
 {
   "status": 200,
   "info": "200 OK",
@@ -41,7 +41,7 @@ location @rewrite {
 }
 ```
 - 通信错误
-```
+```json
 {
   "status": 400,
   "info": "400 Bad Request",
@@ -50,7 +50,7 @@ location @rewrite {
 }
 ```
 -  503 DataBase Error 数据库错误
-```
+```json
 {
   "status": 503,
   "info": "DataBase Error",
@@ -62,7 +62,7 @@ location @rewrite {
 ### 用户类
 #### 用户注册
 - POST
-```
+```json
 {
     "method": "user",
     "action": "register",
@@ -74,7 +74,7 @@ location @rewrite {
 ```
 
 #### 成功
-```
+```json
 {
   "status": 200,
   "info": "Register Successflly",
@@ -85,7 +85,7 @@ location @rewrite {
 
 #### 错误
 - You have registered 您已注册
-```
+```json
 {
   "status": 4051,
   "info": "You have registered",
@@ -94,7 +94,7 @@ location @rewrite {
 }
 ```
 - Name Conflict 用户名冲突
-```
+```json
 {
   "status": 4052,
   "info": "Name Conflict",
@@ -103,7 +103,7 @@ location @rewrite {
 }
 ```
  - Mail Conflict 邮箱冲突
-```
+```json
 {
   "status": 4053,
   "info": "Mail Conflict",
@@ -113,7 +113,7 @@ location @rewrite {
 ```
 
 #### 用户登录
-```
+```json
 {
    "method": "user",
    "action": "login",
@@ -124,7 +124,7 @@ location @rewrite {
 ```
 
 #### 成功
-```
+```json
 {
   "status": 200,
   "info": "Login Successfully",
@@ -137,7 +137,7 @@ location @rewrite {
 
 #### 失败
 - 406 Account Not Found & Wrong Password 认证错误
-```
+```json
 {
   "status": 406,
   "info": "Account Not Found & Wrong Password",
@@ -146,7 +146,7 @@ location @rewrite {
 }
 ```
 - 407 Account Banned 用户被禁止
-```
+```json
 {
   "status": 407,
   "info": "Account Banned",
@@ -156,7 +156,7 @@ location @rewrite {
 ```
 #### 用户注销
 - POST
-```
+```json
 {
     "method": "user",
     "action": "logout",
@@ -166,7 +166,7 @@ location @rewrite {
  }
 ```
 - 成功
-```
+```json
 {
   "status": 200,
   "info": "Logout Success",
@@ -176,7 +176,7 @@ location @rewrite {
 ```
 #### 用户信息获取
 - POST
-```
+```json
 {
     "method": "user",
     "action": "info",
@@ -188,7 +188,7 @@ location @rewrite {
 ```
 
 - 成功
-```
+```json
 {
   "status": 200,
   "info": "User info get successfully",
@@ -206,7 +206,7 @@ location @rewrite {
 ```
 
 - 失败 404 User Not Found 未找到该用户
-```
+```json
 {
   "status": 404,
   "info": "User Not Found",
@@ -215,7 +215,7 @@ location @rewrite {
 }
 ```
 #### 用户信息修改
-```
+```json
 {
     "method": "user",
     "action": "edit_profile",
@@ -226,7 +226,7 @@ location @rewrite {
 }
 ```
 - 成功
-```
+```json
 {
   "status": 200,
   "info": "Edit Successfully",
@@ -237,7 +237,7 @@ location @rewrite {
 ```
 ### 文章类
 #### 发布文章
-```
+```json
 {
     "method": "post",
     "action": "post",
@@ -251,7 +251,7 @@ location @rewrite {
 }
 ```
 - 成功
-```
+```json
 {
   "status": 200,
   "info": "Post Successfully",
@@ -262,7 +262,7 @@ location @rewrite {
 ```
 #### 编辑文章
 - POST
-```
+```json
 {
     "method": "post",
     "action": "edit",
@@ -277,7 +277,7 @@ location @rewrite {
 }
 ```
 - 成功
-```
+```json
 {
   "status": 200,
   "info": "Edit Successfully",
@@ -287,7 +287,7 @@ location @rewrite {
 }
 ```
 - 失败 Forbidden 无权限修改 User ID 与 Post ID 不匹配
-```
+```json
 {
   "status": 403,
   "info": "Forbidden",
@@ -296,7 +296,7 @@ location @rewrite {
 }
 ```
 - 失败 Post Not Found 文章未找到
-```
+```json
 {
   "status": 404,
   "info": "Post Not Found",
@@ -305,7 +305,7 @@ location @rewrite {
 }
 ```
 - 失败 Account Banned 账号被锁定
-```
+```json
 {
   "status": 407,
   "info": "Account Banned",

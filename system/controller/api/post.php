@@ -13,27 +13,33 @@ class postAPI extends Controller
   }
 
   function list() {
-    $this->load('post/list', 'api');
+    if ($this->is_ok('list'))
+      $this->load('post/list', 'api');
   }
 
   function post() {
-    $this->load('post/post', 'api');
+    if ($this->is_ok('post'))
+      $this->load('post/post', 'api');
   }
 
   function edit() {
-    $this->load('post/edit', 'api');
+    if ($this->is_ok('edit'))
+      $this->load('post/edit', 'api');
   }
 
   function delete() {
-    $this->load('post/delete', 'api');
+    if ($this->is_ok('delete'))
+      $this->load('post/delete', 'api');
   }
 
   function favour() {
-    $this->load('post/favour', 'api');
+    if ($this->is_ok('favour'))
+      $this->load('post/favour', 'api');
   }
 
   function self_list() {
-    $this->load('post/self_list', 'api');
+    if ($this->is_ok('self_list'))
+      $this->load('post/self_list', 'api');
   }
 
   function is_ok($action) {

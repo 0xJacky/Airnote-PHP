@@ -14,7 +14,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 You should have received a copy of the GNU Affero General Public License along with this program. If not, see http://www.gnu.org/licenses/.
 
-## Nginx URL Rewrite
+## Nginx Config
 ```
 try_files $uri $uri/ /index.php;
 location ^~ /system {
@@ -23,10 +23,14 @@ location ^~ /system {
 ```
 ## 协议 Protocol
 1. auth\_key: sha1(当前 UNIX 时间戳.后端密钥)
+
 	注意：密钥有效期为1000毫秒，如果出现验证错误，主要原因是网络延时造成的，建议重复请求三次
 2. token: 8-4-4-12 的 UUID 结构
+
 	储存 sha1 加密后的 用户 ID 及 最后活跃时间
+
 	token 由服务器生成并返回，无需校验其有效性，只需要需要保存到本地以备后续使用即可。
+
 	PS: token 没有时间限制，考虑到多个设备的登录问题，所以 API v2 采用了验证最后活跃时间的方法，并判断 token 是过期的还是无效的。
 3. 请注意用户密码传输过程前需要使用 sha1 加密
 
@@ -198,8 +202,8 @@ location ^~ /system {
     "Name": "0xJacky",
     "registered_time": "2017-03-11 21:09:24",
     "lastest_active": "2017-03-12 02:24:29",
-    "avatar": "NULL",
-        "introduction": "NULL",
+    "avatar": "avatar/default.png",
+    "introduction": "NULL",
     "favour": "0",
     "token": "7627F9AD-71A6-3512-AF19-8AEE76D13F3B"
   }
@@ -383,7 +387,7 @@ page: 分页操作（每页 10 篇文章），建议限制 page 最大增长 ≤
         "title": "测试 title1",
         "img": "null",
         "favours": "6",
-        "avatar": "null"
+        "avatar": "avatar/default.png"
       }
     ]
   }

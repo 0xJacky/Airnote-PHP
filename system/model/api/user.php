@@ -83,6 +83,7 @@ class user extends Model
     $token = $this->auth->generate_token($self_id);
     $result = $this->db->fetch_array($sql);
     $favours = $this->db->fetch_array('SELECT COUNT(`favours`) FROM `api_posts` WHERE `mail` = \''.$mail.'\'');
+    $result['avatar'] = !is_null($result['avatar']) ? $result['avatar'] : 'avatar/default.png';
     if(!empty($result))  {
       $result = array(
         'status' => 200,

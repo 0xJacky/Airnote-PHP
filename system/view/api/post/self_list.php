@@ -3,7 +3,7 @@ if (!defined("IN_JIANJI")) {
   die();
 }
 
-$page = (int)$_POST['page'] ? $_POST['page'] : 1;
+$page = isset($_POST['page']) ? (int)$_POST['page'] : 1;
 $result = $this->post->self_list($_POST['user_id'], $page);
 switch ($result['status']) {
   case '200':

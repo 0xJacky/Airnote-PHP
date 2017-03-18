@@ -18,22 +18,22 @@ class userAPI extends Controller
   }
 
   function logout() {
-    if ($this->is_ok('login'))
+    if ($this->is_ok('logout'))
       $this->load('user/logout', 'api');
   }
 
   function register() {
-    if ($this->is_ok('login'))
+    if ($this->is_ok('register'))
       $this->load('user/register', 'api');
   }
 
   function info() {
-    if ($this->is_ok('login'))
+    if ($this->is_ok('info'))
       $this->load('user/info', 'api');
   }
 
   function edit_profile() {
-    if ($this->is_ok('login'))
+    if ($this->is_ok('edit_profile'))
       $this->load('user/edit_profile', 'api');
   }
 

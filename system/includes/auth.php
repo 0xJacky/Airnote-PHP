@@ -49,8 +49,9 @@ class auth extends Model
     }
     $sql = 'SELECT `lastest_active`, `token` FROM `api_users` WHERE `ID` = \''.(int)$user_id.'\'';
     $result = $this->db->fetch_array($sql);
-
-    if ( $token[4] !== $result['lastest_active'] )
+    $lastest_active = strtoupper(sha1(strtotime($result['lastest_active'])));
+    $lastest_active = substr($lastest_active,0,12);
+    if ( $token[4] !== $lastest_active )
     {
       return $this->http->response(408, 'Your Token is overdue, please relogin');
     }

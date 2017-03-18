@@ -45,6 +45,7 @@ require(M_PATH.'api/post.php');
 
 /* Setup Auth Class */
 require(CLASS_PATH . 'auth.php');
+$auth = new auth();
 
 /* Load Controllers */
 require(C_PATH.'api/user.php');

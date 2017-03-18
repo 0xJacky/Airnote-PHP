@@ -5,7 +5,7 @@
 if (!defined("IN_JIANJI")) {
  exit();
 }
- 
+
 class http
 {
   function info($type) {
@@ -28,6 +28,9 @@ class http
   		case 405:
   			$info = "405 Method Not Allowed";
   			break;
+      case '408':
+        $info = '408 Request Time Out';
+        break;
   		case 500:
   			$info = "500 Internal Server Error";
   			break;

@@ -48,11 +48,8 @@ class userAPI extends Controller
           die($this->http->info(400));
         break;
       case 'logout':
-          if (isset($_POST['id'])) {
-            $_POST['id'] = (int)$_POST['id'];
-            return true;
-          }
-          die($this->http->info(400));
+          $_POST['user_id'] = (int)$_POST['user_id']; // It has been check in security.php
+          return true;
         break;
       case 'register':
           if(isset($_POST['name'], $_POST['pwd'], $_POST['mail'])) {
@@ -71,8 +68,8 @@ class userAPI extends Controller
           die($this->http->info(400));
         break;
       case 'edit_profile':
-          if (isset($_POST['id'], $_POST['request'], $_POST['content'])) {
-            $_POST['id'] = (int)$_POST['id'];
+          if (isset($_POST['request'], $_POST['content'])) {
+            $_POST['user_id'] = (int)$_POST['user_id']; // It has been check in security.php
             $_POST['request'] = xss_clean($_POST['request']);
             $_POST['content'] = xss_clean($_POST['content']);
             return true;

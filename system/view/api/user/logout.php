@@ -3,7 +3,7 @@ if (!defined("IN_JIANJI")) {
   die();
 }
 
-$result = $this->user->logout($_POST['id']);
+$result = $this->user->logout($_POST['user_id']);
 switch ($result) {
   case '200':
   $this->http->response(200, 'Logout Success');

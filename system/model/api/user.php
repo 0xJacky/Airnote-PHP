@@ -12,6 +12,7 @@ class user extends Model
   function __construct()
   {
     parent::__construct();
+    $this->auth = new auth();
   }
 
   function register($name, $pwd, $mail) {
@@ -42,7 +43,7 @@ class user extends Model
   function login($mail, $pwd) {
     $try = 'SELECT `ID`, `sha1_pwd`, `mail`, `status` FROM `api_users` WHERE `mail` = \''.$mail.'\'';
     $result = $this->db->fetch_array($try);
-  $token = $this->auth->generate_token($result['ID'] /*,false*/);
+    $token = $this->auth->generate_token($result['ID'], false);
     $time = date("Y-m-d H:i:s", strtotime('now'));
     if (empty($result) || $pwd !== $result['sha1_pwd']) {
       $result['status'] = 406;
@@ -104,7 +105,7 @@ class user extends Model
 
   function edit_profile($id, $request, $content) {
     $time = date("Y-m-d H:i:s", strtotime('now'));
-    $token = $this->auth->generate_token($id/*,false*/);
+    $token = $this->auth->generate_token($id, false);
     $sql = 'UPDATE `api_users` SET `'.$request.'` = \''.$content.'\', `lastest_active` = \''.$time.'\', `token` = \''.$token.'\' WHERE `ID` = \''.$id.'\'';
     if ($this->db->query($sql)) {
       $result = array(

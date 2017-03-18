@@ -1,8 +1,8 @@
 <?php
 define("IN_JIANJI", true);
-/* TODO: Check Auth Key at first */
-
-/* Then refer to router system */
+/* Do some security checks at first */
+include('system/security.php');
+/* Then include to router system */
 include('system/router.php');
 
 ?>

@@ -11,6 +11,7 @@ class post extends Model
 
   function __construct() {
     parent::__construct();
+    $this->auth = new auth();
   }
 
   function post($user_id, $title, $content, $img, $type) {
@@ -139,7 +140,7 @@ class post extends Model
     for ($i=0; $i<count($r); $i++) {
       $sql = 'SELECT `avatar` FROM `api_users` WHERE `ID` = '.$r[$i]['author'];
       $a = $this->db->fetch_array($sql);
-      $r[$i]['avatar'] = $a['avatar'];//将 api_users 中的头像数据插入到数组中
+      $r[$i]['avatar'] = $a['avatar']; //将 api_users 中的头像数据插入到数组中
     }
 
     $result = array(

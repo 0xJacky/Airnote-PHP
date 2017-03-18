@@ -18,5 +18,8 @@ define('DB_PW', '');
 /* 数据库名称 */
 define('DB_NAME', '');
 
-/* 后端定义密钥 */
+/* 后端密钥 */
 define('SALT', '');
+
+/* DEBUG 模式 */
+define('IN_DEBUG', true);

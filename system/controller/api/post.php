@@ -39,8 +39,8 @@ class postAPI extends Controller
   function is_ok($action) {
     switch ($action) {
       case 'post':
-        if (isset($_POST['user_id'], $_POST['title'], $_POST['content'], $_POST['img'], $_POST['type'])) {
-          $_POST['user_id'] = (int)$_POST['user_id'];
+        if (isset($_POST['title'], $_POST['content'], $_POST['img'], $_POST['type'])) {
+          $_POST['user_id'] = (int)$_POST['user_id'];// It has been check in security.php
           $_POST['title'] = xss_clean($_POST['title']);
           $_POST['content'] = xss_clean($_POST['content']);
           $_POST['img'] = xss_clean($_POST['img']);
@@ -50,8 +50,8 @@ class postAPI extends Controller
         die($this->http->info(400));
       break;
       case 'edit':
-        if (isset($_POST['user_id'], $_POST['post_id'], $_POST['title'], $_POST['content'], $_POST['img'], $_POST['type'])) {
-          $_POST['user_id'] = (int)$_POST['user_id'];
+        if (isset($_POST['post_id'], $_POST['title'], $_POST['content'], $_POST['img'], $_POST['type'])) {
+          $_POST['user_id'] = (int)$_POST['user_id'];// It has been check in security.php
           $_POST['post_id'] = (int)$_POST['post_id'];
           $_POST['title'] = xss_clean($_POST['title']);
           $_POST['content'] = xss_clean($_POST['content']);
@@ -63,19 +63,16 @@ class postAPI extends Controller
       break;
       case 'delete':
       case 'favour':
-        if (isset($_POST['user_id'], $_POST['post_id'])) {
-          $_POST['user_id'] = (int)$_POST['user_id'];
+        if (isset($_POST['post_id'])) {
+          $_POST['user_id'] = (int)$_POST['user_id']; // It has been check in security.php
           $_POST['post_id'] = (int)$_POST['post_id'];
           return true;
         }
         die($this->http->info(400));
       break;
       case 'self_list':
-        if (isset($_POST['user_id'])) {
-          $_POST['user_id'] = (int)$_POST['user_id'];
-          return true;
-        }
-        die($this->http->info(400));
+        $_POST['user_id'] = (int)$_POST['user_id'];// It has been check in security.php
+        return true;
       break;
 
       default:

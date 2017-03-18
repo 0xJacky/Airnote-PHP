@@ -17,6 +17,9 @@ You should have received a copy of the GNU Affero General Public License along w
 ## Nginx URL Rewrite
 ```
 try_files $uri $uri/ /index.php;
+location ^~ /system {
+  deny all;
+}
 ```
 ## 协议 Protocol
 1. auth\_key: sha1(当前UNIX时间戳, 盐) 加密后得到的一个拥有 32 个字符的字符串
@@ -125,8 +128,8 @@ try_files $uri $uri/ /index.php;
   "status": 200,
   "info": "Login Successfully",
   "content": {
-    "ID": "1",
-    "token": "MS0xNDg5MjQ0NTc5LSpUSlhGT3JaMzJqTEtVUGk="
+    "user_id": "1",
+    "token": "7627F9AD-5E05-2566-BEE5-EE8AE8AC9B6A"
   }
 }
 ```
@@ -156,8 +159,8 @@ try_files $uri $uri/ /index.php;
 {
     "method": "user",
     "action": "logout",
-    "id": 1,
-    "token": "MS0xNDg5MjQ0NTc5LSpUSlhGT3JaMzJqTEtVUGk=",
+    "user_id": 1,
+    "token": "7627F9AD-5E05-2566-BEE5-EE8AE8AC9B6A",
     "auth_key": "****************"
  }
 ```
@@ -176,9 +179,9 @@ try_files $uri $uri/ /index.php;
 {
     "method": "user",
     "action": "info",
-    "id": 1,
+    "user_id": 1,
     "mail": "other@uozi.org",
-    "token": "****************",
+    "token": "7627F9AD-5E05-2566-BEE5-EE8AE8AC9B6A",
     "auth_key": "****************"
  }
 ```
@@ -189,14 +192,14 @@ try_files $uri $uri/ /index.php;
   "status": 200,
   "info": "User info get successfully",
   "content": {
-    "ID": "1",
+    "user_id": "1",
     "Name": "0xJacky",
     "registered_time": "2017-03-11 21:09:24",
     "lastest_active": "2017-03-12 02:24:29",
     "avatar": "NULL",
         "introduction": "NULL",
     "favour": "0",
-    "token": "LTE0ODkyNTc4OTUtTSViI0E2UGdBVnpaRFd0Kg=="
+    "token": "7627F9AD-71A6-3512-AF19-8AEE76D13F3B"
   }
 }
 ```
@@ -216,9 +219,9 @@ request: 头像: avatar, 简介(\<255): introduction, 名称: name
 {
     "method": "user",
     "action": "edit_profile",
-    "id": 1,
+    "user_id": 1,
     "request": "introduction",
-    "token": "LTE0ODkyNTc4OTUtTSViI0E2UGdBVnpaRFd0Kg==",
+    "token": "7627F9AD-71A6-3512-AF19-8AEE76D13F3B",
     "auth_key": "****************"
 }
 ```
@@ -228,7 +231,7 @@ request: 头像: avatar, 简介(\<255): introduction, 名称: name
   "status": 200,
   "info": "Edit Successfully",
   "content": {
-    "token": "MS0xNDg5MzA4ODUyLSFlOHRuWnU3ZHVxdyNSM1Q="
+    "token": "7627F9AD-8FCF-4A53-8A1D-86186C8C3077"
   }
 }
 ```
@@ -245,7 +248,7 @@ type: 文章类型，目前默认为 1
     "img": "img_relative_url.png",
     "type": 1,
     "auth_key": "****************",
-    "token": "****************"
+    "token": "7627F9AD-8FCF-4A53-8A1D-86186C8C3077"
 }
 ```
 - 成功
@@ -254,7 +257,7 @@ type: 文章类型，目前默认为 1
   "status": 200,
   "info": "Post Successfully",
   "content": {
-    "token": "MS0xNDg5NzYyMDMzLW9HVHNEUiFQc2lMTUomYWk="
+    "token": "7627F9AD-9406-8EB1-B61F-1A98969AAA42"
   }
 }
 ```
@@ -281,7 +284,7 @@ type: 文章类型，目前默认为 1
     "img": "img_relative_url.png",
     "type": 1,
     "auth_key": "****************",
-    "token": "MS0xNDg5NzYyMDMzLW9HVHNEUiFQc2lMTUomYWk="
+    "token": "7627F9AD-9406-8EB1-B61F-1A98969AAA42"
 }
 ```
 - 成功
@@ -290,7 +293,7 @@ type: 文章类型，目前默认为 1
   "status": 200,
   "info": "Edit Successfully",
   "content": {
-    "token": "MS0xNDg5NzY0NjU2LSgkMmtWRkA2SkBSKmNAWSg="
+    "token": "7627F9AD-9ACF-B63F-E53F-612EE7E0BC90"
   }
 }
 ```
@@ -329,7 +332,7 @@ type: 文章类型，目前默认为 1
     "action": "favour",
     "user_id": 1,
     "post_id": 1,
-    "token": "LTE0ODkyNTc4OTUtTSViI0E2UGdBVnpaRFd0Kg==",
+    "token": "7627F9AD-9ACF-B63F-E53F-612EE7E0BC90",
     "auth_key": "****************"
 }
 ```
@@ -339,7 +342,7 @@ type: 文章类型，目前默认为 1
   "status": 200,
   "info": "Favour Successfully",
   "content": {
-    "token": "MS0xNDg5NzY2ODkzLXNhWE43TFhvcWFLeilvTXE="
+    "token": "7627F9AD-AD9B-0C9F-496A-E8330A013586"
   }
 }
 ```
@@ -372,7 +375,7 @@ page: 分页操作（每页 10 篇文章），建议限制 page 最大增长 ≤
   "content": {
     "post_list": [
       {
-        "ID": "1",
+        "user_id": "1",
         "author": "1",
         "post_date": "2017-03-17 22:47:13",
         "title": "测试 title1",

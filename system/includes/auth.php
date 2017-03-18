@@ -7,39 +7,58 @@ if ( !defined('IN_JIANJI') ) {
   die();
 }
 
-class auth
+class auth extends Model
 {
+  function __construct() {
+    parent::__construct();
+    $this->http = new http();
+  }
 
-  function check_auth_key($check_auth_key)
+  function check_auth_key($auth_key)
   {
     /**
-    * Auth_key 内存放的信息：UNIX时间戳+密钥；
-    * 请提交已用 md5 加密过的数据
+    * Auth Key 内存放的信息：UNIX时间戳  + 密钥；
+    * 请提交已用 sha1 加密过的数据
     **/
-    $key_raw = time().$salt;
-    $key = md5($key_raw);
-    //$salt = 0;
-    if ($key == $check_auth_key);
+    if ( IN_DEBUG ) {
+      return true;
+    }
+    $str = time().SALT;
+    $key = sha1($str);
+    if ($key == $auth_key)
     {
       return true;
     }
     return false;
   }
 
-  function check_token($user_token)
+  function check_token($user_id, $token)
   {
     /**
-    * Token 内存放的信息：base64_encode(ID-当前时间戳-盐)
-    * 请提交已用 base64 加密过的数据
+    * Token 内存放的信息：用户 ID - 干扰 1 - 干扰 2 - 干扰 3 - 最后活跃时间
+    * 用户 ID 及 最后活跃时间已被 sha1 加密
     **/
-    $sql = 'SELECT * FROM `api_users` WHERE `user_token` = \''.$user_token.'\'';
-    $result = $db->fetch_array($sql);
-    $token = explode('-', base64_decode($user_token));
-    $id = $token[0];
-    if ( $id == $result['ID'] )
-    {
+    if ( IN_DEBUG ) {
       return true;
     }
+    $user_id = strtoupper(sha1($user_id . SALT));
+    $user_id = substr($user_id,0,8);
+    $token = explode('-', $token);
+    if ( $token[0] !== $user_id ) {
+      return $this->http->response(403, 'Your Token is invalid');
+    }
+    $sql = 'SELECT `lastest_active`, `token` FROM `api_users` WHERE `ID` = \''.(int)$user_id.'\'';
+    $result = $this->db->fetch_array($sql);
+
+    if ( $token[4] !== $result['lastest_active'] )
+    {
+      return $this->http->response(408, 'Your Token is overdue, please relogin');
+    }
+
+    if ( $result == NULL && $result['token'] !== $token ) {
+      return $this->http->response(406, 'User ID or Token is invalid');
+    }
+
     return false;
   }
 
@@ -69,7 +88,7 @@ class auth
 
   function generate_password( $length = 12, $special_chars = true, $extra_special_chars = false )
   {
-    $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ0123456789';
     if ( $special_chars )
     $chars .= '!@#$%^&*()';
     if ( $extra_special_chars )
@@ -82,10 +101,23 @@ class auth
       return $password;
   }
 
-  function generate_token($id)
+  function generate_token($user_id, $write = true)
   {
-    $string = $id.'-'.time().'-'.$this->generate_password( $length = 16 );
-    $token = base64_encode($string);
+    $sha1_id = strtoupper(sha1($user_id . SALT));
+    $time = strtoupper(sha1(time()));
+    $pwd = strtoupper(sha1($this->generate_password(12,0)));
+    $token = substr($sha1_id,0,8) .'-';
+    $token .= substr($pwd,0,4) .'-';
+    $token .= substr($pwd,4,4) .'-';
+    $token .= substr($pwd,8,4) .'-';
+    $token .= substr($time,0,12);
+    $time = date("Y-m-d H:i:s", strtotime('now'));
+    if ( $write ) {
+      $sql = 'UPDATE `api_users` SET `lastest_active` = \''.$time.'\', `token` = \''.$token.'\' WHERE `ID` = \''.$user_id.'\'';
+      if (!$this->db->query($sql)) {
+        return $http->info(503);
+      }
+    }
     return $token;
   }
 }

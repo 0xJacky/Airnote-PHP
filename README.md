@@ -24,6 +24,7 @@ location ^~ /system {
 
 ## Todos
 - 后台管理系统
+- URL Restful
 ## 协议 Protocol
 1. auth\_key: sha1(当前 UNIX 时间戳.后端密钥)
 

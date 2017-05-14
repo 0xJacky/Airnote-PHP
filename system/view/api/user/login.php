@@ -3,7 +3,7 @@ if (!defined("IN_JIANJI")) {
   die();
 }
 
-$result = $this->user->login($_POST['mail'], $_POST['pwd']);
+$result = $this->model->user->login($_POST['mail'], $_POST['pwd']);
 switch ($result['status']) {
   case '200':
   $this->http->response(200, 'Login Successfully', $result['content']);

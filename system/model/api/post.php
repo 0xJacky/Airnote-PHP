@@ -6,7 +6,7 @@ if (!defined("IN_JIANJI")) {
  die();
 }
 
-class post extends Model
+class post_model extends Model
 {
 
   function __construct() {

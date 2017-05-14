@@ -1,8 +1,7 @@
 <?php
 define("IN_JIANJI", true);
 /* Do some security checks at first */
-include('system/security.php');
-/* Then include to router system */
-include('system/router.php');
-
+//include('system/security.php');
+/* Then include system */
+include('system/init.php');
 ?>

@@ -6,7 +6,7 @@ if (!defined("IN_JIANJI")) {
   die();
 }
 
-class user extends Model
+class user_model extends Model
 {
 
   function __construct()
@@ -78,13 +78,13 @@ class user extends Model
     return 503;
   }
 
-  function get_info($self_id, $mail) {
-    $sql = 'SELECT `ID`, `name`, `registered_time`, `lastest_active`, `avatar` FROM `api_users` WHERE `mail` = \''.$mail.'\'';
-    $token = $this->auth->generate_token($self_id);
+  function get_info(/*$self_id,*/ $mail) {
+    $sql = 'SELECT `ID`, `name`, `registered_time`, `lastest_active`, `avatar`, `introduction` FROM `api_users` WHERE `mail` = \''.$mail.'\'';
+    //$token = $this->auth->generate_token($self_id);
     $result = $this->db->fetch_array($sql);
-    $favours = $this->db->fetch_array('SELECT COUNT(`favours`) FROM `api_posts` WHERE `mail` = \''.$mail.'\'');
+    $favours = $this->db->fetch_array('SELECT COUNT(`favours`) FROM `api_posts`, `api_users` WHERE api_users.mail = \''.$mail.'\'');
     $result['avatar'] = !is_null($result['avatar']) ? $result['avatar'] : 'avatar/default.png';
-    if(!empty($result))  {
+    if(!empty($result['ID']))  {
       $result = array(
         'status' => 200,
         'content' => array(
@@ -94,8 +94,8 @@ class user extends Model
           'lastest_active' => $result['lastest_active'],
           'avatar' => $result['avatar'],
           'introduction' => $result['introduction'],
-          'favour' => $favours['favours'],
-          'token' => $token
+          'favour' => $favours['COUNT(`favours`)'],
+          //'token' => $token
         ),
       );
       return $result;

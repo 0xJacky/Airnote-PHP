@@ -13,8 +13,9 @@ class Controller
   public function __construct()
   {
     $this->http = new http();
-    $this->user = new user();
-    $this->post = new post();
+    $this->model = new model();
+    $this->model->user = new user_model();
+    $this->model->post = new post_model();
   }
 
   public function load($file, $dir)

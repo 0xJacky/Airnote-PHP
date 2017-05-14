@@ -47,12 +47,30 @@ require(M_PATH.'api/post.php');
 require(CLASS_PATH . 'auth.php');
 $auth = new auth();
 
-/* Load Controllers */
-require(C_PATH.'api/user.php');
-require(C_PATH.'api/post.php');
-$userAPI = new userAPI();
-$postAPI = new postAPI();
-
 /* Load helper functions */
 require(CLASS_PATH . 'functions.php');
+
+/* Load Router Class */
+require(CLASS_PATH . 'router.php');
+
+/* Load Controllers */
+require(C_PATH . 'frontend.php');
+require(C_PATH . 'admin.php');
+require(C_PATH . 'api/user.php');
+require(C_PATH . 'api/post.php');
+$frontend = new frontend();
+$admin = new admin();
+$user = new user();
+$post = new post();
+
+$_Controllers = array(
+  'frontend' => $frontend,
+  'admin'  => $admin,
+  'user' => $user,
+  'post' => $post,
+);
+$router = new Router($_Controllers);
+
+$router->auto_run($frontend, 'home'); // The params are uesd to define index page.
+
 ?>

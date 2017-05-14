@@ -3,7 +3,7 @@ if (!defined("IN_JIANJI")) {
   die();
 }
 
-$result = $this->user->edit_profile($_POST['user_id'], $_POST['request'], $_POST['content']);
+$result = $this->model->user->edit_profile($_POST['user_id'], $_POST['request'], $_POST['content']);
 switch ($result['status']) {
   case '200':
     $this->http->response(200, 'Edit Successfully', $result['content']);

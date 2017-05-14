@@ -6,7 +6,7 @@ if (!defined("IN_JIANJI")) {
   die();
 }
 
-class postAPI extends Controller
+class post extends Controller
 {
   function __construct() {
     parent::__construct();

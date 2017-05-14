@@ -6,7 +6,7 @@ if (!defined("IN_JIANJI")) {
   die();
 }
 
-class userAPI extends Controller
+class user extends Controller
 {
   function __construct() {
     parent::__construct();

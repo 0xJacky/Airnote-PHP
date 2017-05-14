@@ -3,7 +3,7 @@ if (!defined("IN_JIANJI")) {
   die();
 }
 
-$result = $this->user->register($_POST['name'], $_POST['pwd'], $_POST['mail']);
+$result = $this->model->user->register($_POST['name'], $_POST['pwd'], $_POST['mail']);
 switch ($result) {
   case '200':
   $this->http->response(200, 'Register Successflly', $result['token']);

@@ -29,10 +29,26 @@ class http
             case 405:
                 $info = "Method Not Allowed";
                 break;
+            case 4051:
+                $info = "Registered";
+                break;
+            case 4052:
+                $info = "Name Conflict";
+                break;
+            case 4053:
+                $info = "Mail Conflict";
+                break;
+            case 406:
+                $info = "Account Not Found & Wrong Password";
+                break;
             case 407:
                 $info = "Account Banned";
+                break;
             case 408:
                 $info = "Request Time Out";
+                break;
+            case 409:
+                $info = "Try Too Much";
                 break;
             case 500:
                 $info = "Internal Server Error";

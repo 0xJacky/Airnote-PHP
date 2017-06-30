@@ -2,9 +2,10 @@
 .DS_Store
 
 # dev
-.idea
+.idea/
 api_nginx.conf
 test.php
 
 # config
 system/config.php
+

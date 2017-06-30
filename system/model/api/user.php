@@ -46,9 +46,11 @@ class user_model extends Model
         session_start();
         if ($_SESSION['try'] > 10 && time() < $_SESSION['lasttry']) {
             return $this->http->info(409);
+        } else {
+            $_SESSION['try'] = 0;
         }
 
-        if(!isset($_SESSION['connected']) || $_SESSION['connected'] != true) {
+        if (!isset($_SESSION['connected']) || $_SESSION['connected'] != true) {
             session_regenerate_id(true);
         } elseif ($_SESSION['connected'] === true) {
             $result = array(
@@ -64,11 +66,11 @@ class user_model extends Model
         $result = $this->db->fetch_array($try);
         if (empty($result) || $pwd !== $result['sha1_pwd']) {
             $_SESSION['try'] = $_SESSION['try'] + 1;
-            $_SESSION['lasttry'] = time()+300; // 五分钟
+            $_SESSION['lasttry'] = time() + 300; // 五分钟
             return $this->http->info(406);
         } elseif ($result['status'] == 0) {
             $_SESSION['try'] = $_SESSION['try'] + 1;
-            $_SESSION['lasttry'] = time()+300;
+            $_SESSION['lasttry'] = time() + 300;
             return $this->http->info(407);
         } elseif ($pwd == $result['sha1_pwd']) {
             $_SESSION['userid'] = $result['ID'];
@@ -90,28 +92,29 @@ class user_model extends Model
         }
     }
 
-    function logout($id)
+    function logout()
     {
+        session_start();
         $time = date("Y-m-d H:i:s", strtotime('now'));
-        $sql = 'UPDATE `api_users` SET `is_login` = \'0\', `lastest_active` = \'' . $time . '\' WHERE `ID` = \'' . $id . '\'';
+        $sql = 'UPDATE `api_users` SET `is_login` = \'0\', `lastest_active` = \'' . $time . '\' WHERE `ID` = \'' . $_SESSION['userid'] . '\'';
         if ($this->db->query($sql)) {
             return 200;
         }
         return 503;
     }
 
-    function get_info(/*$self_id,*/
-        $mail)
+    function get_info($mail)
     {
+        session_start();
         $sql = 'SELECT `ID`, `name`, `registered_time`, `lastest_active`, `avatar`, `introduction` FROM `api_users` WHERE `mail` = \'' . $mail . '\'';
-        //$token = $this->auth->generate_token($self_id);
+        $token = $this->auth->generate_token($_SESSION['token']);
         $result = $this->db->fetch_array($sql);
         $favours = $this->db->fetch_array('SELECT COUNT(`favours`) FROM `api_posts`, `api_users` WHERE api_users.mail = \'' . $mail . '\'');
         $result['avatar'] = !is_null($result['avatar']) ? $result['avatar'] : 'avatar/default.png';
         if (!empty($result['ID'])) {
             $result = array(
                 'status' => 200,
-                'content' => array(
+                'user_info' => array(
                     'ID' => $result['ID'],
                     'Name' => $result['name'],
                     'registered_time' => $result['registered_time'],
@@ -119,29 +122,28 @@ class user_model extends Model
                     'avatar' => $result['avatar'],
                     'introduction' => $result['introduction'],
                     'favour' => $favours['COUNT(`favours`)'],
-                    //'token' => $token
+                    'token' => $token
                 ),
             );
-            return $result;
+            return $this->http->response($result);
         }
-        $result['status'] = 404;
-        return $result;
+        return $this->http->info(404);
     }
 
-    function edit_profile($id, $request, $content)
+    function edit_profile($request, $content)
     {
+        session_start();
         $time = date("Y-m-d H:i:s", strtotime('now'));
         $token = $this->auth->generate_token($id, false);
-        $sql = 'UPDATE `api_users` SET `' . $request . '` = \'' . $content . '\', `lastest_active` = \'' . $time . '\' WHERE `ID` = \'' . $id . '\'';
+        $sql = 'UPDATE `api_users` SET `' . $request . '` = \'' . $content . '\', `lastest_active` = \'' . $time . '\' WHERE `ID` = \'' . $_SESSION['userid'] . '\'';
         if ($this->db->query($sql)) {
             $result = array(
                 'status' => 200,
-                'content' => array('token' => $token)
+                'token' => $token
             );
-            return $result;
+            return $this->http->response($result);
         }
-        $result['status'] == 503;
-        return $result;
+        return $this->http->info(503);
     }
 }
 

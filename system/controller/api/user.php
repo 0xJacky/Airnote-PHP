@@ -16,31 +16,31 @@ class user extends Controller
     function login()
     {
         if ($this->is_ok('login'))
-            $this->view('user/login', 'api');
+            $this->model->user('login');
     }
 
     function logout()
     {
         if ($this->is_ok('logout'))
-            $this->view('user/logout', 'api');
+            $this->model->user('logout');
     }
 
     function register()
     {
         if ($this->is_ok('register'))
-            $this->view('user/register', 'api');
+            $this->model->user('register');
     }
 
     function info()
     {
         if ($this->is_ok('info'))
-            $this->view('user/info', 'api');
+            $this->model->user('info');
     }
 
     function edit_profile()
     {
         if ($this->is_ok('edit_profile'))
-            $this->view('user/edit_profile', 'api');
+            $this->model->user('edit_profile');
     }
 
     function is_ok($action)

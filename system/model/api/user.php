@@ -97,6 +97,7 @@ class user_model extends Model
         session_start();
         $time = date("Y-m-d H:i:s", strtotime('now'));
         $sql = 'UPDATE `api_users` SET `is_login` = \'0\', `lastest_active` = \'' . $time . '\' WHERE `ID` = \'' . $_SESSION['userid'] . '\'';
+        session_destroy();
         if ($this->db->query($sql)) {
             return 200;
         }

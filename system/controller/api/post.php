@@ -16,37 +16,37 @@ class post extends Controller
     function list()
     {
         if ($this->is_ok('list'))
-            $this->load('post/list', 'api');
+            $this->model->post('list');
     }
 
     function post()
     {
         if ($this->is_ok('post'))
-            $this->load('post/post', 'api');
+            $this->model->post('post');
     }
 
     function edit()
     {
         if ($this->is_ok('edit'))
-            $this->load('post/edit', 'api');
+            $this->model->post('edit');
     }
 
     function delete()
     {
         if ($this->is_ok('delete'))
-            $this->load('post/delete', 'api');
+            $this->model->post('delete');
     }
 
     function favour()
     {
         if ($this->is_ok('favour'))
-            $this->load('post/favour', 'api');
+            $this->model->post('favour');
     }
 
     function self_list()
     {
         if ($this->is_ok('self_list'))
-            $this->load('post/self_list', 'api');
+            $this->model->post('self_list');
     }
 
     function is_ok($action)

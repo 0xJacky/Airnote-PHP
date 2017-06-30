@@ -1,5 +1,10 @@
-api_nginx.conf
+# macOS
 .DS_Store
-system/config.php
 
+# dev
+.idea
+api_nginx.conf
 test.php
+
+# config
+system/config.php

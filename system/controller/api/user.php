@@ -14,27 +14,27 @@ class user extends Controller
 
   function login() {
     if ($this->is_ok('login'))
-      $this->load('user/login', 'api');
+      $this->view('user/login', 'api');
   }
 
   function logout() {
     if ($this->is_ok('logout'))
-      $this->load('user/logout', 'api');
+      $this->view('user/logout', 'api');
   }
 
   function register() {
     if ($this->is_ok('register'))
-      $this->load('user/register', 'api');
+      $this->view('user/register', 'api');
   }
 
   function info() {
     if ($this->is_ok('info'))
-      $this->load('user/info', 'api');
+      $this->view('user/info', 'api');
   }
 
   function edit_profile() {
     if ($this->is_ok('edit_profile'))
-      $this->load('user/edit_profile', 'api');
+      $this->view('user/edit_profile', 'api');
   }
 
   function is_ok($action) {

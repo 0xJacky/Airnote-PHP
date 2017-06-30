@@ -14,50 +14,47 @@ class http
         $info = "200 OK";
         break;
   		case 304:
-  			$info = "304 Not Modified";
+  			$info = "Not Modified";
   			break;
   		case 400:
-  			$info = "400 Bad Request";
+  			$info = "Bad Request";
   			break;
   		case 404:
-  			$info = "404 Not Found";
+  			$info = "Not Found";
   			break;
   		case 403:
-  			$info = "403 Forbidden";
+  			$info = "Forbidden";
   			break;
   		case 405:
-  			$info = "405 Method Not Allowed";
+  			$info = "Method Not Allowed";
   			break;
-      case '408':
-        $info = '408 Request Time Out';
-        break;
+        case 407:
+            $info = "Account Banned";
+        case 408:
+             $info = "Request Time Out";
+            break;
   		case 500:
-  			$info = "500 Internal Server Error";
+  			$info = "Internal Server Error";
   			break;
+        case 503:
+            $info = "DataBase Error";
+            break;
   		default:
-        $type = "501";
-  			$info = "501 Not Implemented";
+            $type = "501";
+  			$info = "Not Implemented";
   			break;
-  	}
-  	header("HTTP/1.1 ".$info);
-  	header("Status: ".$info);
-  	header("Content-type: application/json; charset=UTF-8");
-    $this->response($type, $info);
-    exit();
+    }
+  	    header("HTTP/1.1 ".$info);
+  	    header("Status: ".$info);
+        $message = array(
+            'status' => $type,
+            'info' => $info
+        );
+        return $this->response($message);
   }
 
-  function response($type = '200', $info, $content = NULL) {
+  function response($message) {
     header("Content-type: application/json; charset=UTF-8");
-    $message = array(
-      'status' => $type,
-      'info' => $info
-    );
-    if ( $content !== NULL ) {
-      $message['content'] = $content;
-    } else {
-      $message['timestamp'] = time();
-      $message['version'] = API_VERSION;
-    }
     echo json_encode($message);
     exit();
   }

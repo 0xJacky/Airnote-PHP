@@ -4,7 +4,7 @@ JianJi Project PHP Server v2
 
 Designed by 0xJacky
 
-Copyright © 2013-2017 UoziTech 2017
+Copyright © 2017 UoziTech 2017
 
 The program is distributed under the terms of the GNU Affero General Public License.
 

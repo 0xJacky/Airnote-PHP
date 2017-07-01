@@ -15,13 +15,18 @@ class post_model extends Model
         $this->auth = new auth();
     }
 
-    function post($user_id, $title, $content, $img, $type)
+    function post($title, $content, $img, $type)
     {
-        $sql = 'SELECT `status` FROM `api_users` WHERE `ID` = \'' . $user_id . '\''; // 查询用户状态
+        session_start();
+        if (!$_SESSION['connected']) {
+            return $this->http->info(403);
+        }
+        $sql = 'SELECT `status` FROM `api_users` WHERE `ID` = \'' . $_SESSION['user_id'] . '\''; // 查询用户状态
         $r = $this->db->fetch_array($sql);
         if ($r['status'] == 0) { // 账号被禁用
             return $this->http->info(407);
         }
+        $user_id = $_SESSION['user_id'];
         $time = date("Y-m-d H:i:s", strtotime('now'));
         $time_gmt = date("Y-m-d H:i:s", strtotime('-8 hours')); // 转换为北京时间
         $sql = "INSERT INTO `api_posts` (`author`, `post_date`, `post_date_gmt`, `title`, `content`, `img`, `favours`, `status`, `sha1_pwd`, `post_edited`, `post_edited_gmt`, `type`)";
@@ -38,8 +43,13 @@ class post_model extends Model
         }
     }
 
-    function edit($user_id, $post_id, $title, $content, $img, $type)
+    function edit($post_id, $title, $content, $img, $type)
     {
+        session_start();
+        if (!$_SESSION['connected']) {
+            return $this->http->info(403);
+        }
+        $user_id = $_SESSION['user_id'];
         $sql = 'SELECT `author` FROM `api_posts` WHERE `ID` = \'' . $post_id . '\''; // 查询文章状态
         $r = $this->db->fetch_array($sql);
         if ($r == NULL) { // 不存在的
@@ -74,6 +84,10 @@ class post_model extends Model
 
     function delete($user_id, $post_id)
     {
+        session_start();
+        if (!$_SESSION['connected']) {
+            return $this->http->info(403);
+        }
         $sql = 'SELECT `author` FROM `api_posts` WHERE `ID` = \'' . $post_id . '\'';
         $r = $this->db->fetch_array($sql);
         if ($r == NULL) {
@@ -99,8 +113,13 @@ class post_model extends Model
         return $this->http->response($result);
     }
 
-    function favour($user_id, $post_id)
+    function favour($post_id)
     {
+        session_start();
+        if (!$_SESSION['connected']) {
+            return $this->http->info(403);
+        }
+        $user_id = $_SESSION['user_id'];
         $sql = 'SELECT `status` FROM `api_posts` WHERE `ID` = \'' . $post_id . '\'';
         $r = $this->db->fetch_array($sql);
         if ($r == NULL or $r['status'] == 0) {
@@ -120,6 +139,7 @@ class post_model extends Model
 
     function list($page)
     {
+        /* 公共接口无需验证 session */
         $page = $page * 10 - 10;
         if ($page > 1) {
             $limit = $page - 10;
@@ -127,34 +147,39 @@ class post_model extends Model
             $limit = 10;
         }
         $sql = 'SELECT `api_posts`.`ID`, `avatar`, `post_date`, `title`, `img`, `favours` FROM `api_posts` INNER JOIN `api_users` on api_posts.author = api_users.ID WHERE `status` = 1 ORDER BY `post_date` LIMIT ' . $page . ',' . $limit;
-        $r = $this->db->fetch_all($sql);
+        $list = $this->db->fetch_all($sql);
         if ($r == false) {
             return $this->http->info(503);
         }
 
         $result = array(
             'status' => 200,
-            'article_list' => $r,
+            'article_list' => $list,
         );
         return $this->http->response($result);
     }
 
-    function self_list($user_id, $page)
+    function self_list($page)
     {
+        session_start();
+        if (!$_SESSION['connected']) {
+            return $this->http->info(403);
+        }
         $page = $page * 10 - 10;
         if ($page > 1) {
             $limit = $page - 10;
         } else {
             $limit = 10;
         }
-        $sql = 'SELECT `post_date`, `title`, `img`, `favours` FROM `api_posts` WHERE `ID`= ' . $user_id . ' AND `status` = 1 ORDER BY `post_date` LIMIT ' . $page . ',' . $limit;
-        $r = $this->db->fetch_all($sql);
+        session_start();
+        $sql = 'SELECT `post_date`, `title`, `img`, `favours` FROM `api_posts` WHERE `ID`= ' . $_SESSION['user_id'] . ' AND `status` = 1 ORDER BY `post_date` LIMIT ' . $page . ',' . $limit;
+        $list = $this->db->fetch_all($sql);
         if ($r == false) {
             return $this->http->info(503);
         }
         $result = array(
             'status' => 200,
-            'post_list' => $r,
+            'article_list' => $list,
         );
         return $result;
     }

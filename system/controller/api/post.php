@@ -13,40 +13,40 @@ class post extends Controller
         parent::__construct();
     }
 
-    function list()
-    {
-        if ($this->is_ok('list'))
-            $this->model->post('list');
-    }
-
     function post()
     {
         if ($this->is_ok('post'))
-            $this->model->post('post');
+            $this->model->post->post($_POST['title'], $_POST['content'], $_POST['img'], $_POST['type']);
     }
 
     function edit()
     {
         if ($this->is_ok('edit'))
-            $this->model->post('edit');
+            $this->model->post->edit($_POST['post_id'], $_POST['title'], $_POST['content'], $_POST['img'], $_POST['type']));
     }
 
     function delete()
     {
         if ($this->is_ok('delete'))
-            $this->model->post('delete');
+            $this->model->post->delete($_POST['post_id']);
     }
 
     function favour()
     {
         if ($this->is_ok('favour'))
-            $this->model->post('favour');
+            $this->model->post->favour($_POST['post_id']);
+    }
+
+    function list()
+    {
+        if ($this->is_ok('list'))
+            $this->model->post->list($_POST['page']);
     }
 
     function self_list()
     {
         if ($this->is_ok('self_list'))
-            $this->model->post('self_list');
+            $this->model->post->self_list($_POST['page']);
     }
 
     function is_ok($action)
@@ -78,17 +78,19 @@ class post extends Controller
             case 'delete':
             case 'favour':
                 if (isset($_POST['post_id'])) {
-                    $_POST['user_id'] = (int)$_POST['user_id']; // It has been checked in security.php
                     $_POST['post_id'] = (int)$_POST['post_id'];
                     return true;
                 }
                 die($this->http->info(400));
                 break;
+            case 'list':
             case 'self_list':
-                $_POST['user_id'] = (int)$_POST['user_id'];// It has been checked in security.php
-                return true;
+                if (isset($_POST['page'])) {
+                    $_POST['page'] = (int)$_POST['page'];
+                    return true;
+                }
+                die($this->http->info(400));
                 break;
-
             default:
                 die($this->http->info(400));
                 break;

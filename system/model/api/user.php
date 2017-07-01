@@ -73,7 +73,7 @@ class user_model extends Model
             $_SESSION['lasttry'] = time() + 300;
             return $this->http->info(407);
         } elseif ($pwd == $result['sha1_pwd']) {
-            $_SESSION['userid'] = $result['ID'];
+            $_SESSION['user_id'] = $result['ID'];
             $_SESSION['try'] = 0;
             $_SESSION['connected'] = true;
             $token = $this->auth->generate_token($result['ID']);
@@ -99,7 +99,7 @@ class user_model extends Model
             return $this->http->info(403);
         }
         $time = date("Y-m-d H:i:s", strtotime('now'));
-        $sql = 'UPDATE `api_users` SET `is_login` = \'0\', `lastest_active` = \'' . $time . '\' WHERE `ID` = \'' . $_SESSION['userid'] . '\'';
+        $sql = 'UPDATE `api_users` SET `is_login` = \'0\', `lastest_active` = \'' . $time . '\' WHERE `ID` = \'' . $_SESSION['user_id'] . '\'';
         session_destroy();
         if ($this->db->query($sql)) {
             return $this->http->info(200);
@@ -144,8 +144,8 @@ class user_model extends Model
             return $this->http->info(403);
         }
         $time = date("Y-m-d H:i:s", strtotime('now'));
-        $token = $this->auth->generate_token($_SESSION['userid']);
-        $sql = 'UPDATE `api_users` SET `' . $request . '` = \'' . $content . '\', `lastest_active` = \'' . $time . '\' WHERE `ID` = \'' . $_SESSION['userid'] . '\'';
+        $token = $this->auth->generate_token($_SESSION['user_id']);
+        $sql = 'UPDATE `api_users` SET `' . $request . '` = \'' . $content . '\', `lastest_active` = \'' . $time . '\' WHERE `ID` = \'' . $_SESSION['user_id'] . '\'';
         if ($this->db->query($sql)) {
             $result = array(
                 'status' => 200,

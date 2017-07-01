@@ -13,7 +13,7 @@ class frontend extends Controller
   }
 
   function home() {
-    echo 'Hello World';
+    return $this->view('home','frontend');
   }
 }
 

@@ -1,0 +1,455 @@
+/*! HTML5 Boilerplate v5.0 | MIT License | http://h5bp.com/ */
+
+html {
+    color: #222;
+    font-size: 1em;
+    line-height: 1.4;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+* {
+    outline: none;
+}
+
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+    vertical-align: middle;
+}
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.browserupgrade {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+body {
+    background-color: #fafafa;
+    font-family: 'Source Sans Pro', sans-serif;
+    background-image: url('../img/bg.png');
+    background-attachment: fixed;
+    background-position: 0 0;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    margin-top: 80px;
+    transition: 0s linear;
+    transition-property: background-position;
+}
+
+.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+/* ==========================================================================
+   Media Queries
+   ========================================================================== */
+
+@media only screen and (min-width: 35em) {
+
+}
+
+@media print,
+(-o-min-device-pixel-ratio: 5/4),
+(-webkit-min-device-pixel-ratio: 1.25),
+(min-resolution: 120dpi) {
+
+}
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+.hidden {
+    display: none !important;
+    visibility: hidden;
+}
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
+
+/* ==========================================================================
+   Print styles
+   ========================================================================== */
+
+@media print {
+    *,
+    *:before,
+    *:after {
+        background: transparent !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    a[href^="#"]:after,
+    a[href^="javascript:"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group;
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}
+
+a {
+    color: #9D7FEF;
+}
+
+a:hover {
+    color: #7251CD;
+    text-decoration: none;
+}
+
+.navigation {
+    padding: 19px;
+    min-height: 82px;
+    background: #fff;
+    border-bottom: 1px solid #F4F4F4;
+    width: 100%;
+    position: fixed;
+    z-index: 100;
+    margin-top: -80px;
+    opacity: 0.98;
+    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.03);
+
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    float: left;
+    padding-top: 5px;
+}
+
+.cta-block {
+    text-align: right;
+}
+
+.arrow {
+    margin-left: 10px;
+    margin-top: -4px;
+}
+
+.main-cta {
+    height: 54px;
+    background: #9D7FEF;
+    border-radius: 100px;
+    font-weight: 300;
+    border: none;
+    padding: 0px 20px 0px 20px;
+    font-size: 18px;
+    color: #FFFFFF;
+    margin-top: 35px;
+    margin-bottom: 90px;
+    letter-spacing: 1px;
+    -webkit-transition: background 0.2s ease-in;
+    -moz-transition: background 0.2s ease-in;
+    -o-transition: background 0.2s ease-in;
+    -ms-transition: background 0.2s ease-in;
+    transition: background 0.2s ease-in;
+}
+
+.main-cta:hover {
+    background: #7251CD;
+    -webkit-transition: background 0.2s ease-in;
+    -moz-transition: background 0.2s ease-in;
+    -o-transition: background 0.2s ease-in;
+    -ms-transition: background 0.2s ease-in;
+    transition: background 0.2s ease-in;
+}
+
+.create-account {
+    height: 42px;
+    padding: 10px 20px 10px 20px;
+    background: #FBF9FF;
+    border: 1px solid #9D7FEF;
+    border-radius: 100px;
+    font-size: 14px;
+    color: #9D7FEF;
+    -webkit-transition: background 0.2s ease-in;
+    -moz-transition: background 0.2s ease-in;
+    -o-transition: background 0.2s ease-in;
+    -ms-transition: background 0.2s ease-in;
+    transition: background 0.2s ease-in;
+}
+
+.create-account:hover {
+
+    background: #9D7FEF;
+    color: #FBF9FF;
+    -webkit-transition: background 0.2s ease-in;
+    -moz-transition: background 0.2s ease-in;
+    -o-transition: background 0.2s ease-in;
+    -ms-transition: background 0.2s ease-in;
+    transition: background 0.2s ease-in;
+}
+
+.contacts {
+    background-image: url('../img/contacts.png');
+    background-size: cover;
+    min-height: 463px;
+}
+
+.invoices {
+    background-image: url('../img/invoices.png');
+    background-size: cover;
+    min-height: 463px;
+}
+
+.projects {
+    background-image: url('../img/projects.png');
+    background-size: cover;
+    min-height: 463px;
+}
+
+.apps {
+    background-image: url('../img/app.png');
+    background-size: cover;
+    min-height: 463px;
+}
+
+.classical {
+    border: none;
+    background: none;
+    color: #777;
+    font-size: 16px;
+    margin-right: 25px;
+    height: 46px;
+    font-family: "Microsoft YaHei", PingFang SC;
+}
+
+.classical:hover {
+    color: #777;
+}
+
+.callout {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.mid {
+    margin-top: 30px;
+}
+
+.brand {
+    font-size: 14px;
+    float: left;
+    line-height: 15px;
+    color: #bbb;
+    padding-left: 10px;
+    padding-top: 5px;
+    position: relative;
+    top: 5px;
+    border-left: 2px solid #eaeaea;
+    margin-left: 10px;
+    overflow: hidden;
+    height: 38px;
+    font-family: "Microsoft YaHei", PingFang SC;
+}
+
+h1 {
+    font-size: 60px;
+    color: #414141;
+    font-weight: 400;
+    margin-left: 30px;
+    margin-right: 30px;
+    font-family: "Microsoft YaHei", PingFang SC;
+}
+
+h2 {
+    font-weight: 400;
+    font-size: 32px;
+    color: #414141;
+    margin-left: 30px;
+    margin-right: 30px;
+    font-family: "Microsoft YaHei", PingFang SC;
+}
+
+h3 {
+    font-size: 26px;
+    color: #5F5F5F;
+    font-weight: 400;
+    margin-left: 30px;
+    margin-right: 30px;
+    font-family: "Microsoft YaHei", PingFang SC;
+}
+
+h4 {
+    font-size: 18px;
+    color: #5F5F5F;
+    font-weight: 400;
+    margin-left: 30px;
+    margin-right: 30px;
+    font-family: "Microsoft YaHei", PingFang SC;
+}
+
+p {
+    font-size: 16px;
+    color: #5F5F5F;
+    font-weight: 300;
+    margin-left: 30px;
+    margin-right: 30px;
+    font-family: "Microsoft YaHei", PingFang SC;
+}
+
+.purple {
+    color: #9D7FEF;
+}
+
+.feature {
+    background: #FFFFFF;
+    border: 1px solid #EFEFEF;
+    box-shadow: 0px 2px 20px 0px rgba(0, 0, 0, 0.04);
+    border-radius: 4px;
+    margin-bottom: 45px;
+}
+
+.feature-description {
+    text-align: center;
+    padding: 120px 60px 0px 60px;
+}
+
+.post {
+    padding: 20px 20px 50px 20px;
+}
+
+.description-img {
+    margin-bottom: 30px;
+}
+
+.links {
+    text-align: right;
+}
+
+footer {
+    height: 60px;
+    bottom: 0px;
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    background-color: #fff;
+    border-top: 1px solid #F4F4F4;
+}
+
+.copy {
+    line-height: 60px;
+    margin-left: 15px;
+    margin-right: 15px;
+    font-family: "Microsoft YaHei", PingFang SC;
+}

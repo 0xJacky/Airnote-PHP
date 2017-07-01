@@ -4,7 +4,7 @@ if (!defined('IN_JIANJI')) {
 }
 
 /* 定义版本号 */
-define('API_VERSION', '2.0');
+define('API_VERSION', '2.1');
 
 /* 数据库地址 */
 define('DB_HOST', '');

@@ -37,7 +37,9 @@ require(CLASS_PATH . 'controller.php');
 
 /* Setup HTTP Class */
 require(CLASS_PATH . 'http.php');
-$http = new http();
+
+/* Load Url Class */
+require(CLASS_PATH . 'url.php');
 
 /* Load Models */
 require(M_PATH . 'api/user.php');
@@ -45,7 +47,6 @@ require(M_PATH . 'api/post.php');
 
 /* Setup Auth Class */
 require(CLASS_PATH . 'auth.php');
-$auth = new auth();
 
 /* Load helper functions */
 require(CLASS_PATH . 'functions.php');

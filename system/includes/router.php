@@ -34,26 +34,43 @@ class Router
         //       重置数组索引值    清除空键             Explode 为数组
         $param = array_values(array_filter(explode('/', $this->url)));
 
-        print_r($param);
+        //print_r($param);
         $class = $param[0];
-        if ($class == 'api') {
-            if(!isset($param[1])){return $this->http->info(404);}
-            $class = $param[1].'_api';
-            $method = $param[2];
-            if (method_exists($this->$class, $method)) {
-                return $this->$class->$method();
+        switch ($class) {
+            case 'api':
+                if (!isset($param[1])) {
+                    return $this->http->info(404);
+                }
+                if (!isset($_POST['auth_key'])) {
+                    die($this->http->info(403));
+                }
+                if (!$auth->check_auth_key($_POST['auth_key'])) {
+                    die($this->http->info(403));
+                }
+                $class = $param[1] . '_api';
+                $method = $param[2];
+                if (method_exists($this->$class, $method)) {
+                    return $this->$class->$method();
 
-            }
+                }
+                break;
+            case 'resouces':
+                if (!file_exists($this->url)){
+                    return $this->http->info(404);
+                }
+                break;
+            default:
+                $method = $param[1];
+
+                if (method_exists($this->$class, $method)) {
+
+                    return $this->$class->$method();
+
+                }
+
+                return $this->http->info(404);
+                break;
         }
-        $method = $param[1];
-
-        if (method_exists($this->$class, $method)) {
-
-            return $this->$class->$method();
-
-        }
-
-        return $this->http->info(404);
     }
 
 }

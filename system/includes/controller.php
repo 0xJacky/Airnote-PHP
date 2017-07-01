@@ -16,6 +16,7 @@ class Controller
         $this->model = new model();
         $this->model->user = new user_model();
         $this->model->post = new post_model();
+        $this->url = new Url();
     }
 
     function view($file, $dir)

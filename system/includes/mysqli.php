@@ -1,47 +1,44 @@
 <?php
 /**
-* JianJi MySQLi Common Class Library
-*/
+ * JianJi MySQLi Common Class Library
+ */
 
-if ( !defined('IN_JIANJI') ) {
-  die();
+if (!defined('IN_JIANJI')) {
+    die();
 }
 
-class db {
+class db
+{
 
-    var $error_message  = array();
+    var $error_message = array();
 
-    function __construct($db_host, $db_user, $db_pw, $db_name) {
+    function __construct($db_host, $db_user, $db_pw, $db_name)
+    {
 
-      $this->connect($db_host, $db_user, $db_pw, $db_name);
+        $this->connect($db_host, $db_user, $db_pw, $db_name);
 
     }
 
-    function connect($db_host, $db_user, $db_pw, $db_name) {
+    function connect($db_host, $db_user, $db_pw, $db_name)
+    {
 
-        if ( ! mysqli_connect($db_host, $db_user, $db_pw) ) {
+        if (!mysqli_connect($db_host, $db_user, $db_pw)) {
 
-          $this->ErrorMsg("Can't Connect MySQL Server($db_host)!");
+            $this->ErrorMsg("Can't Connect MySQL Server($db_host)!");
 
         } else {
 
-          $this->link_id = @mysqli_connect($db_host, $db_user, $db_pw);
+            $this->link_id = @mysqli_connect($db_host, $db_user, $db_pw);
 
         }
 
-        if ($db_name)
-        {
-            if (mysqli_select_db($this->link_id, $db_name) === false )
-            {
+        if ($db_name) {
+            if (mysqli_select_db($this->link_id, $db_name) === false) {
                 return false;
-            }
-            else
-            {
+            } else {
                 return true;
             }
-        }
-        else
-        {
+        } else {
             return true;
         }
     }
@@ -54,8 +51,7 @@ class db {
     function query($sql)
     {
 
-        if (!($query = mysqli_query($this->link_id, $sql)))
-        {
+        if (!($query = mysqli_query($this->link_id, $sql))) {
             $this->error_message[]['message'] = 'MySQL Query Error';
             $this->error_message[]['sql'] = $sql;
             $this->error_message[]['error'] = mysqli_error($this->link_id);
@@ -72,12 +68,10 @@ class db {
     function fetch_array($query, $result_type = MYSQLI_ASSOC)
     {
         if ($query) {
-          $query_output = mysqli_query($this->link_id, $query);
-          return mysqli_fetch_array($query_output, $result_type);
-        }
-        else
-        {
-          return NULL;
+            $query_output = mysqli_query($this->link_id, $query);
+            return mysqli_fetch_array($query_output, $result_type);
+        } else {
+            return NULL;
         }
     }
 
@@ -88,31 +82,32 @@ class db {
 
     function fetch_all($sql, $result_type = MYSQLI_ASSOC)
     {
-      $sql = $this->query($sql);
-      return mysqli_fetch_all($sql, $result_type);
+        $sql = $this->query($sql);
+        return mysqli_fetch_all($sql, $result_type);
     }
 
     function result($query, $row = 0)
     {
-			$result = false;
-			$numrows = mysqli_num_rows($query);
-			if ($numrows && $row <= ($numrows - 1) && $row >=0){
-				mysqli_data_seek($query, $row);
-				$resrow = mysqli_fetch_row($query);
-				if (isset($resrow[0])){
-					$result = $resrow[0];
-				}
-			}
-  		return $result;
+        $result = false;
+        $numrows = mysqli_num_rows($query);
+        if ($numrows && $row <= ($numrows - 1) && $row >= 0) {
+            mysqli_data_seek($query, $row);
+            $resrow = mysqli_fetch_row($query);
+            if (isset($resrow[0])) {
+                $result = $resrow[0];
+            }
+        }
+        return $result;
     }
 
-    function real_escape_string($data) {
-      return mysqli_real_escape_string($this->link_id, $data);
+    function real_escape_string($data)
+    {
+        return mysqli_real_escape_string($this->link_id, $data);
     }
 
     function free_result($data)
     {
-      return mysqli_free_result($data);
+        return mysqli_free_result($data);
     }
 
     function close()
@@ -132,12 +127,9 @@ class db {
 
     function ErrorMsg($message = '', $sql = '')
     {
-        if ($message)
-        {
+        if ($message) {
             echo "API DataBase info: $message";
-        }
-        else
-        {
+        } else {
             echo "MySQL server error report:";
             print_r($this->error_message);
         }
@@ -145,4 +137,5 @@ class db {
         exit;
     }
 }
+
 ?>

@@ -6,7 +6,7 @@ if (!defined("IN_JIANJI")) {
     die();
 }
 
-class post extends Controller
+class post_api extends Controller
 {
     function __construct()
     {
@@ -22,7 +22,7 @@ class post extends Controller
     function edit()
     {
         if ($this->is_ok('edit'))
-            $this->model->post->edit($_POST['post_id'], $_POST['title'], $_POST['content'], $_POST['img'], $_POST['type']));
+            $this->model->post->edit($_POST['post_id'], $_POST['title'], $_POST['content'], $_POST['img'], $_POST['type']);
     }
 
     function delete()

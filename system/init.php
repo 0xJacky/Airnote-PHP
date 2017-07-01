@@ -1,9 +1,9 @@
 <?php
 /* JianJi AutoLoad Common Class Libraries */
 if (!defined("IN_JIANJI")) {
-  die();
+    die();
 }
-ini_set('date.timezone','Asia/Shanghai');
+ini_set('date.timezone', 'Asia/Shanghai');
 /* SYSTEM Root Path */
 define('ROOT_PATH', dirname(__FILE__));
 /* JianJi Libraries Path */
@@ -19,8 +19,8 @@ define('BASEPATH', dirname(ROOT_PATH) . '/');
 
 /* base url define */
 $sitepath = dirname(dirname($_SERVER['PHP_SELF']));
-$sitepath = strlen($sitepath) === 1 ? '/' : $sitepath.'/';
-$siteurl = htmlspecialchars(($_SERVER['SERVER_PORT'] == '443' ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$sitepath);
+$sitepath = strlen($sitepath) === 1 ? '/' : $sitepath . '/';
+$siteurl = htmlspecialchars(($_SERVER['SERVER_PORT'] == '443' ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $sitepath);
 define('SITE_URL', $siteurl);
 
 /* Load Configs */
@@ -40,8 +40,8 @@ require(CLASS_PATH . 'http.php');
 $http = new http();
 
 /* Load Models */
-require(M_PATH.'api/user.php');
-require(M_PATH.'api/post.php');
+require(M_PATH . 'api/user.php');
+require(M_PATH . 'api/post.php');
 
 /* Setup Auth Class */
 require(CLASS_PATH . 'auth.php');
@@ -56,21 +56,10 @@ require(CLASS_PATH . 'router.php');
 /* Load Controllers */
 require(C_PATH . 'frontend.php');
 require(C_PATH . 'admin.php');
-require(C_PATH . 'api/user.php');
-require(C_PATH . 'api/post.php');
-$frontend = new frontend();
-$admin = new admin();
-$user = new user();
-$post = new post();
+require(C_PATH . 'user_api.php');
+require(C_PATH . 'post_api.php');
 
-$_Controllers = array(
-  'frontend' => $frontend,
-  'admin'  => $admin,
-  'user' => $user,
-  'post' => $post,
-);
-$router = new Router($_Controllers);
-
-$router->auto_run($frontend, 'home'); // The params are uesd to define index page.
+$router = new Router();
+$router->run();
 
 ?>

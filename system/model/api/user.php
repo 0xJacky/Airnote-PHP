@@ -95,18 +95,24 @@ class user_model extends Model
     function logout()
     {
         session_start();
+        if (!$_SESSION['connected']) {
+            return $this->http->info(403);
+        }
         $time = date("Y-m-d H:i:s", strtotime('now'));
         $sql = 'UPDATE `api_users` SET `is_login` = \'0\', `lastest_active` = \'' . $time . '\' WHERE `ID` = \'' . $_SESSION['userid'] . '\'';
         session_destroy();
         if ($this->db->query($sql)) {
-            return 200;
+            return $this->http->info(200);
         }
-        return 503;
+        return $this->http->info(503);
     }
 
-    function get_info($mail)
+    function info($mail)
     {
         session_start();
+        if (!$_SESSION['connected']) {
+            return $this->http->info(403);
+        }
         $sql = 'SELECT `ID`, `name`, `registered_time`, `lastest_active`, `avatar`, `introduction` FROM `api_users` WHERE `mail` = \'' . $mail . '\'';
         $token = $this->auth->generate_token($_SESSION['token']);
         $result = $this->db->fetch_array($sql);
@@ -134,8 +140,11 @@ class user_model extends Model
     function edit_profile($request, $content)
     {
         session_start();
+        if (!$_SESSION['connected']) {
+            return $this->http->info(403);
+        }
         $time = date("Y-m-d H:i:s", strtotime('now'));
-        $token = $this->auth->generate_token($id, false);
+        $token = $this->auth->generate_token($_SESSION['userid']);
         $sql = 'UPDATE `api_users` SET `' . $request . '` = \'' . $content . '\', `lastest_active` = \'' . $time . '\' WHERE `ID` = \'' . $_SESSION['userid'] . '\'';
         if ($this->db->query($sql)) {
             $result = array(

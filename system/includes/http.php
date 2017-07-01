@@ -20,11 +20,11 @@ class http
             case 400:
                 $info = "Bad Request";
                 break;
-            case 404:
-                $info = "Not Found";
-                break;
             case 403:
                 $info = "Forbidden";
+                break;
+            case 404:
+                $info = "Not Found";
                 break;
             case 405:
                 $info = "Method Not Allowed";
@@ -61,7 +61,7 @@ class http
                 $info = "Not Implemented";
                 break;
         }
-        header("HTTP/1.1 " . $info);
+        header("HTTP/1.1 " . $type);
         header("Status: " . $info);
         $message = array(
             'status' => $type,

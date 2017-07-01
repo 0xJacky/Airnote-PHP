@@ -39,7 +39,7 @@ location ^~ /system {
 3. 请注意用户密码传输过程前需要使用 sha1 加密
 
 ### 通信测试 & 基本状态
-- GET /
+- GET /api
 - 通信成功
 ```json
 {
@@ -70,7 +70,7 @@ location ^~ /system {
 
 ### 用户类
 #### 用户注册
-- POST
+- POST /api/user/register
 ```json
 {
     "method": "user",
@@ -122,6 +122,7 @@ location ^~ /system {
 ```
 
 #### 用户登录
+POST /api/user/login
 ```json
 {
    "method": "user",
@@ -164,7 +165,7 @@ location ^~ /system {
 }
 ```
 #### 用户注销
-- POST
+- POST /api/user/logout
 ```json
 {
     "method": "user",
@@ -248,6 +249,7 @@ request: 头像: avatar, 简介(\<255): introduction, 名称: name
 ### 文章类
 #### 发布文章
 type: 文章类型，目前默认为 1
+POST /api/post/post
 ```json
 {
     "method": "post",
@@ -281,7 +283,7 @@ type: 文章类型，目前默认为 1
 }
 ```
 #### 编辑文章
-- POST
+- POST /api/post/edit
 type: 文章类型，目前默认为 1
 ```json
 {
@@ -335,7 +337,7 @@ type: 文章类型，目前默认为 1
 }
 ```
 #### 点赞
-- POST
+- POST /api/post/favour
 ```json
 {
     "method": "post",
@@ -368,6 +370,7 @@ type: 文章类型，目前默认为 1
 ```
 #### 获取社区文章
 page: 分页操作（每页 10 篇文章），建议限制 page 最大增长 ≤ 5
+- POST /api/post/list
 ```json
 {
     "method": "post",
@@ -400,6 +403,7 @@ page: 分页操作（每页 10 篇文章），建议限制 page 最大增长 ≤
 
 #### 获取自己的文章
 page: 分页操作（每页 10 篇文章），建议限制 page 最大增长 ≤ 5
+- POST /api/post/self_list
 ```json
 {
     "method": "post",

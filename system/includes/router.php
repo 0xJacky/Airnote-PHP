@@ -39,7 +39,7 @@ class Router
         switch ($class) {
             case 'api':
                 if (!isset($param[1])) {
-                    return $this->http->info(404);
+                    return $this->http->info(200);
                 }
                 if (!isset($_POST['auth_key'])) {
                     die($this->http->info(403));

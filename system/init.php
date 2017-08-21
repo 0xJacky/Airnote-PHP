@@ -1,18 +1,18 @@
 <?php
-/* JianJi AutoLoad Common Class Libraries */
-if (!defined("IN_JIANJI")) {
+/* Airnote AutoLoad Common Class Libraries */
+if (!defined("IN_AIRNOTE")) {
     die();
 }
 ini_set('date.timezone', 'Asia/Shanghai');
 /* SYSTEM Root Path */
 define('ROOT_PATH', dirname(__FILE__));
-/* JianJi Libraries Path */
+/* Airnote Libraries Path */
 define('CLASS_PATH', ROOT_PATH . '/includes/');
-/* JianJi Model Path*/
+/* Airnote Model Path*/
 define('M_PATH', ROOT_PATH . '/model/');
-/* JianJi View Path */
+/* Airnote View Path */
 define('V_PATH', ROOT_PATH . '/view/');
-/* JianJi Controller Path */
+/* Airnote Controller Path */
 define('C_PATH', ROOT_PATH . '/controller/');
 /* Website Root Path */
 define('BASEPATH', dirname(ROOT_PATH) . '/');

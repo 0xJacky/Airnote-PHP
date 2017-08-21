@@ -1,8 +1,8 @@
 <?php
 /**
- * JianJi Post Model
+ * Airnote Post Model
  */
-if (!defined("IN_JIANJI")) {
+if (!defined("IN_AIRNOTE")) {
     die();
 }
 

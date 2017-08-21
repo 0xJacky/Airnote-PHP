@@ -1,9 +1,9 @@
 <?php
 /**
- * JianJi MySQLi Common Class Library
+ * Airnote MySQLi Common Class Library
  */
 
-if (!defined('IN_JIANJI')) {
+if (!defined('IN_AIRNOTE')) {
     die();
 }
 

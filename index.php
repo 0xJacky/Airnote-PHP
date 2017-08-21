@@ -1,5 +1,5 @@
 <?php
-define("IN_JIANJI", true);
+define("IN_AIRNOTE", true);
 /* Do some security checks at first */
 //include('system/security.php');
 /* Then include system */

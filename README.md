@@ -1,6 +1,6 @@
-# JianJi-PHP
+# Airnote-PHP
 
-JianJi Project PHP Server v2
+Airnote Project PHP Server v2
 
 Designed by 0xJacky
 
@@ -170,7 +170,6 @@ POST /api/user/login
 {
     "method": "user",
     "action": "logout",
-    "user_id": 1,
     "token": "7627F9AD-5E05-2566-BEE5-EE8AE8AC9B6A",
     "auth_key": "****************"
  }
@@ -190,7 +189,6 @@ POST /api/user/login
 {
     "method": "user",
     "action": "info",
-    "user_id": 1,
     "mail": "other@uozi.org",
     "token": "7627F9AD-5E05-2566-BEE5-EE8AE8AC9B6A",
     "auth_key": "****************"
@@ -230,7 +228,6 @@ request: 头像: avatar, 简介(\<255): introduction, 名称: name
 {
     "method": "user",
     "action": "edit_profile",
-    "user_id": 1,
     "request": "introduction",
     "token": "7627F9AD-71A6-3512-AF19-8AEE76D13F3B",
     "auth_key": "****************"
@@ -254,7 +251,6 @@ POST /api/post/post
 {
     "method": "post",
     "action": "post",
-    "user_id": 1,
     "title": "test",
     "content": "test content",
     "img": "img_relative_url.png",
@@ -289,7 +285,6 @@ type: 文章类型，目前默认为 1
 {
     "method": "post",
     "action": "edit",
-    "user_id": 1,
     "post_id": 1,
     "title": "test 1",
     "content": "Post edit",
@@ -342,7 +337,6 @@ type: 文章类型，目前默认为 1
 {
     "method": "post",
     "action": "favour",
-    "user_id": 1,
     "post_id": 1,
     "token": "7627F9AD-9ACF-B63F-E53F-612EE7E0BC90",
     "auth_key": "****************"
@@ -409,7 +403,6 @@ page: 分页操作（每页 10 篇文章），建议限制 page 最大增长 ≤
     "method": "post",
     "action": "self_list",
     "page": 1,
-    "user_id": 1,
     "auth_key": "****************"
 }
 ```

@@ -2,7 +2,7 @@
 /**
  * API User class model
  */
-if (!defined("IN_JIANJI")) {
+if (!defined("IN_AIRNOTE")) {
     die();
 }
 

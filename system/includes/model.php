@@ -2,7 +2,7 @@
 /**
  * Model Setup Class
  */
-if (!defined("IN_JIANJI")) {
+if (!defined("IN_AIRNOTE")) {
     exit();
 }
 

@@ -1,8 +1,8 @@
 <?php
 /**
- * JianJi HTTP Library
+ * Airnote HTTP Library
  */
-if (!defined("IN_JIANJI")) {
+if (!defined("IN_AIRNOTE")) {
     exit();
 }
 

@@ -1,10 +1,10 @@
 <?php
 /**
- * JianJi Router Class
+ * Airnote Router Class
  * 0xJacky 2017
  */
 
-if (!defined("IN_JIANJI")) {
+if (!defined("IN_AIRNOTE")) {
     die();
 }
 

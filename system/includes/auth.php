@@ -3,7 +3,7 @@
  * 笺记 API 检查连接密钥 公用类库
  * Copyright 2017 0xJacky
  **/
-if (!defined('IN_JIANJI')) {
+if (!defined('IN_AIRNOTE')) {
     die();
 }
 

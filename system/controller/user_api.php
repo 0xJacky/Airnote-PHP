@@ -2,7 +2,7 @@
 /**
  * API Controller
  **/
-if (!defined("IN_JIANJI")) {
+if (!defined("IN_AIRNOTE")) {
     die();
 }
 

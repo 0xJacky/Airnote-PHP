@@ -1,0 +1,15 @@
+{
+  "name": "Airnote-PHP",
+  "version": "2.1",
+  "description": "A High Performance Server",
+  "require": {
+    "php": ">=7.1.8",
+    "filp/whoops": "*"
+  },
+  "repositories": {
+    "packagist": {
+      "type": "composer",
+      "url": "https://packagist.phpcomposer.com"
+    }
+  }
+}

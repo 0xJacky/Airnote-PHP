@@ -60,7 +60,12 @@ require(C_PATH . 'admin.php');
 require(C_PATH . 'user_api.php');
 require(C_PATH . 'post_api.php');
 
+if (IN_DEBUG) {
+    $whoops = new \Whoops\Run;
+    $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+    $whoops->register();
+}
+
 $router = new Router();
 $router->run();
-
 ?>

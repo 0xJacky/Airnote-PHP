@@ -41,10 +41,7 @@ class Router
                 if (!isset($param[1])) {
                     return $this->http->info(200);
                 }
-                if (!isset($_POST['auth_key'])) {
-                    die($this->http->info(403));
-                }
-                if (!$auth->check_auth_key($_POST['auth_key'])) {
+                if (!isset($_POST['auth_key']) && !$auth->check_auth_key($_POST['auth_key'])) {
                     die($this->http->info(403));
                 }
                 $class = $param[1] . '_api';

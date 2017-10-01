@@ -1,9 +1,6 @@
 <?php
-define("IN_AIRNOTE", true);
+define("BASE_PATH", true);
 
-require('vendor/autoload.php');
-/* Do some security checks at first */
-//include('system/security.php');
-/* Then include system */
+/* Here we go */
 include('system/init.php');
 ?>

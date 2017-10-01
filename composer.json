@@ -4,7 +4,8 @@
   "description": "A High Performance Server",
   "require": {
     "php": ">=7.1.8",
-    "filp/whoops": "*"
+    "filp/whoops": "*",
+    "klein/klein": "^2.1"
   },
   "repositories": {
     "packagist": {

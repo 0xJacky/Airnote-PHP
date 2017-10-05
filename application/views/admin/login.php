@@ -7,11 +7,11 @@
 
 	<title>笺记控制台 | 登录</title>
 
-	<link href="/resources/admin/css/bootstrap.min.css" rel="stylesheet">
-	<link href="/resources/admin/font-awesome/css/font-awesome.css" rel="stylesheet">
+	<link href="//uozi.oss-cn-hangzhou.aliyuncs.com/resources/admin/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//uozi.oss-cn-hangzhou.aliyuncs.com/resources/admin/font-awesome/css/font-awesome.css" rel="stylesheet">
 
-	<link href="/resources/admin/css/animate.css" rel="stylesheet">
-	<link href="/resources/admin/css/style.css" rel="stylesheet">
+	<link href="//uozi.oss-cn-hangzhou.aliyuncs.com/resources/admin/css/animate.css" rel="stylesheet">
+	<link href="//uozi.oss-cn-hangzhou.aliyuncs.com/resources/admin/css/style.css" rel="stylesheet">
 
 </head>
 
@@ -43,8 +43,8 @@
 </div>
 
 <!-- Mainly scripts -->
-<script src="/resources/admin/js/jquery-3.1.1.min.js"></script>
-<script src="/resources/admin/js/bootstrap.min.js"></script>
+<script src="//uozi.oss-cn-hangzhou.aliyuncs.com/resources/admin/js/jquery-3.1.1.min.js"></script>
+<script src="//uozi.oss-cn-hangzhou.aliyuncs.com/resources/admin/js/bootstrap.min.js"></script>
 
 </body>
 
